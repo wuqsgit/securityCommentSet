@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.UseRecordMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.UseRecord">
+        <id column="id" jdbcType="VARCHAR" property="capuseid"/>
+        <result column="usename" jdbcType="VARCHAR" property="usename"/>
+        <result column="time_start" jdbcType="VARCHAR" property="timeStart"/>
+        <result column="time_end" jdbcType="VARCHAR" property="timeEnd"/>
+        <result column="equipment" jdbcType="VARCHAR" property="equipment"/>
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionaryType" jdbcType="VARCHAR" property="dictionaryType"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="application" jdbcType="VARCHAR" property="application"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+        <result column="outin" jdbcType="VARCHAR" property="outin"/>
+        <result column="seIp" jdbcType="VARCHAR" property="seIp"/>
+        <result column="pId" jdbcType="VARCHAR" property="pId"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap1" type="com.ht70605.entity.Product">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="dictionary_id" jdbcType="VARCHAR" property="dictionaryId"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="sysUser_id" jdbcType="VARCHAR" property="sysuserId"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="location_id" jdbcType="VARCHAR" property="locationId"/>
+        <result column="location_info" jdbcType="VARCHAR" property="locationInfo"/>
+        <result column="application_id" jdbcType="VARCHAR" property="applicationId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="storage" jdbcType="VARCHAR" property="storage"/>
+
+        <result column="dictionaryValue" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="sysuserName" jdbcType="VARCHAR" property="sysuserName"/>
+        <result column="applicationName" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locInfo"/>
+        <result column="depName" jdbcType="VARCHAR" property="depName"/>
+        <result column="pNum" jdbcType="VARCHAR" property="applicationNameNum"/>
+
+        <result column="proCode_begin" jdbcType="VARCHAR" property="proCode_begin"/>
+        <result column="proCode_end" jdbcType="VARCHAR" property="proCode_end"/>
+        <result column="sort" jdbcType="VARCHAR" property="sort"/>
+
+    </resultMap>
+    <resultMap id="ProductUseRecordView" type="com.ht70605.entity.ProductUseRecordView" extends="BaseResultMap1">
+        <result column="capUseRecord_id" jdbcType="VARCHAR" property="capUseRecord_id"/>
+        <result column="product_id" jdbcType="VARCHAR" property="product_id"/>
+        <result column="InOut" jdbcType="VARCHAR" property="InOut"/>
+        <result column="pId" jdbcType="VARCHAR" property="pid"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, sysEquipment_id, access_time
+    </sql>
+    <!--查询所有数据 -->
+    <select id="selectAll"  resultMap="BaseResultMap">
+    </select>
+
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+        SELECT pro.id as pId, ca.id as id,su.name as usename,CONCAT(d1.value,se.equipmentNo) as equipment,time_start,time_end,pro_code,ser_num,d1.value as dictionaryType,p.model,a.name as application,p.rfid_code,dp.dep_name as deptname,OutIn as outin,
+        se.IP AS seIp, p.rfid_code
+        FROM capuserecord as ca
+        <if test="paramEntity.searchUser==null">
+        LEFT JOIN productuserecord as pro ON ca.id = pro.capUseRecord_id
+        </if>
+        <if test="paramEntity.searchUser!=null">
+        RIGHT JOIN productuserecord as pro ON ca.id = pro.capUseRecord_id
+        </if>
+        LEFT OUTER JOIN sysequipment as se ON ca.sysEquipment_id = se.id
+        <if test="paramEntity.searchUser==null">
+        LEFT JOIN (
+        </if>
+        <if test="paramEntity.searchUser!=null">
+            RIGHT JOIN (
+        </if>
+        SELECT
+        product.id as id2,product.*
+        FROM
+        product
+        WHERE
+        product_id IS NULL
+        UNION ALL
+        SELECT
+        a.id as id2,b.*
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        product
+        WHERE
+        product_id IS NOT NULL
+        ) AS a
+        INNER JOIN product AS b ON a.product_id = b.id
+        ) p ON pro.product_id = p.id2
+        LEFT OUTER JOIN sysuser as su ON ca.sysUser_id = su.id
+        LEFT OUTER JOIN dictionary as d1 ON se.dictionaryID = d1.id
+        LEFT OUTER JOIN application as a ON p.application_id = a.id
+        LEFT OUTER JOIN sysuser as s ON p.sysUser_id = s.id
+        LEFT OUTER JOIN department as dp ON s.department_id = dp.id
+        <where>
+            ca.id is not null
+            <!--<IF TEST="PARAMENTITY.DEPTID!=NULL">AND SU.DEPARTMENT_ID = #{PARAMENTITY.DEPTID}-->
+            <!--</IF>-->
+            <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.dictionaryType!=null">and d1.code like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.usename!=null">AND su.name like concat(concat('%',#{paramEntity.usename}),'%')
+            </if>
+            <if test="paramEntity.capuseid!=null">AND ca.id = #{paramEntity.capuseid}
+            </if>
+            <if test="paramEntity.searchTime == 1">AND TO_DAYS(ca.time_start) = TO_DAYS(NOW())
+            </if>
+            <if test="paramEntity.searchTime == 7">AND ca.time_start >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+            </if>
+            <if test="paramEntity.searchTime == 30">AND ca.time_start >= DATE_SUB(CURDATE(),INTERVAL 30 DAY)
+            </if>
+            <if test="paramEntity.userid!=null">AND ca.sysUser_id = #{paramEntity.userid}
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                (left(time_start,10)>= #{paramEntity.startTime} or left(time_start,10) >= #{paramEntity.endTime} )
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                (#{paramEntity.endTime}>=left(time_start,10) or #{paramEntity.endTime} >=left(time_end,10))
+            </if>
+        </where>
+       <if test="paramEntity.searchUser==null">GROUP BY ca.id
+        </if>
+        ORDER BY time_start DESC
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        <if test="paramEntity.searchUser==null">
+        SELECT
+        count(1)
+        FROM (
+        SELECT count(*) FROM
+        capuserecord as ca
+        LEFT JOIN productuserecord as pro ON ca.id = pro.capUseRecord_id
+        LEFT OUTER JOIN sysequipment as se ON ca.sysEquipment_id = se.id
+            LEFT JOIN (
+            SELECT
+            product.id as id2,product.*
+            FROM
+            product
+            WHERE
+            product_id IS NULL
+            UNION ALL
+            SELECT
+            a.id as id2,b.*
+            FROM
+            (
+            SELECT
+            *
+            FROM
+            product
+            WHERE
+            product_id IS NOT NULL
+            ) AS a
+            INNER JOIN product AS b ON a.product_id = b.id
+            ) p ON pro.product_id = p.id2
+        LEFT OUTER JOIN sysuser as su ON ca.sysUser_id = su.id
+        LEFT OUTER JOIN dictionary as d1 ON se.dictionaryID = d1.id
+        LEFT OUTER JOIN application as a ON p.application_id = a.id
+        LEFT OUTER JOIN sysuser as s ON p.sysUser_id = s.id
+        LEFT OUTER JOIN department as dp ON s.department_id = dp.id
+        <where>
+            ca.id is not null
+            <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <!--<if test="paramEntity.deptid!=null">AND su.department_id = #{paramEntity.deptid}-->
+            <!--</if>-->
+            <if test="paramEntity.dictionaryType!=null">and d1.code like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.usename!=null">AND su.name like concat(concat('%',#{paramEntity.usename}),'%')
+            </if>
+            <if test="paramEntity.capuseid!=null">AND ca.id = #{paramEntity.capuseid}
+            </if>
+            <if test="paramEntity.searchTime == 1">AND TO_DAYS(ca.time_start) = TO_DAYS(NOW())
+            </if>
+            <if test="paramEntity.searchTime == 7">AND ca.time_start >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+            </if>
+            <if test="paramEntity.searchTime == 30">AND ca.time_start  >= DATE_SUB(CURDATE(),INTERVAL 30 DAY)
+            </if>
+            <if test="paramEntity.userid!=null">AND ca.sysUser_id = #{paramEntity.userid}
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                (left(time_start,10)>= #{paramEntity.startTime} or left(time_start,10) >= #{paramEntity.endTime} )
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                (#{paramEntity.endTime}>=left(time_start,10) or #{paramEntity.endTime} >=left(time_end,10))
+            </if>
+        </where>
+        GROUP BY ca.id
+        )t
+        </if>
+        <if test="paramEntity.searchUser!=null">
+            SELECT
+            count(1)
+            FROM capuserecord as ca
+            RIGHT JOIN productuserecord as pro ON ca.id = pro.capUseRecord_id
+            LEFT OUTER JOIN sysequipment as se ON ca.sysEquipment_id = se.id
+            RIGHT JOIN (
+            SELECT
+            product.id as id2,product.*
+            FROM
+            product
+            WHERE
+            product_id IS NULL
+            UNION ALL
+            SELECT
+            a.id as id2,b.*
+            FROM
+            (
+            SELECT
+            *
+            FROM
+            product
+            WHERE
+            product_id IS NOT NULL
+            ) AS a
+            INNER JOIN product AS b ON a.product_id = b.id
+            ) p ON pro.product_id = p.id2
+            LEFT OUTER JOIN sysuser as su ON ca.sysUser_id = su.id
+            LEFT OUTER JOIN dictionary as d1 ON se.dictionaryID = d1.id
+            LEFT OUTER JOIN application as a ON p.application_id = a.id
+            LEFT OUTER JOIN sysuser as s ON p.sysUser_id = s.id
+            LEFT OUTER JOIN department as dp ON s.department_id = dp.id
+            <where>
+                ca.id is not null
+                <if test="paramEntity.usename!=null">AND su.name like concat(concat('%',#{paramEntity.usename}),'%')
+                </if>
+                <!--<if test="paramEntity.deptid!=null">AND su.department_id = #{paramEntity.deptid}-->
+                <!--</if>-->
+                <if test="paramEntity.capuseid!=null">AND ca.id = #{paramEntity.capuseid}
+                </if>
+                <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                    (left(time_start,10)>= #{paramEntity.startTime} or left(time_start,10) >= #{paramEntity.endTime} )
+                </if>
+                <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                    (#{paramEntity.endTime}>=left(time_start,10) or #{paramEntity.endTime} >=left(time_end,10))
+                </if>
+            </where>
+        </if>
+    </select>
+
+
+
+    <resultMap id="UseRecordMap" type="com.ht70605.entity.UseRecordAnalyze">
+        <result column="useCount" jdbcType="VARCHAR" property="useCount"/>
+        <result column="useName" jdbcType="VARCHAR" property="useName"/>
+        <result column="sid" jdbcType="VARCHAR" property="sid"/>
+    </resultMap>
+    <!--查询已完成清点 -->
+    <select id="selectUseNum" parameterType="page" resultMap="UseRecordMap">
+        SELECT cr.sysUser_id as sid,COUNT(cr.sysUser_id) as useCount,su.name as useName
+        FROM capuserecord as cr
+        RIGHT JOIN productuserecord as pr ON cr.id = pr.capUseRecord_id
+        LEFT JOIN sysuser as su ON cr.sysUser_id = su.id
+        <where>
+            cr.id is not null
+            <if test="paramEntity.sid!=null">AND cr.sysUser_id  = #{paramEntity.sid}
+            </if>
+            <if test="paramEntity.searchTime == 1">AND TO_DAYS(cr.time_start) = TO_DAYS(NOW())
+            </if>
+            <if test="paramEntity.searchTime == 7">AND cr.time_start >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+            </if>
+            <if test="paramEntity.searchTime == 30">AND cr.time_start>= DATE_SUB(CURDATE(),INTERVAL 30 DAY)
+            </if>
+        </where>
+        GROUP BY cr.sysUser_id
+        ORDER BY useCount DESC
+        limit 10
+    </select>
+
+    <select id="selectMx"  parameterType="String" resultMap="ProductUseRecordView">
+        select
+        ProductUseRecord.id AS pId,
+        ProductUseRecord.capUseRecord_id,
+        ProductUseRecord.OutIn,
+        table1.*
+         from
+         ProductUseRecord
+        left join
+        (select p3.*,
+        dictionary.value as 'dictionaryValue',
+        location.locInfo,
+        sysuser.name as 'sysuserName',
+        application.name as 'applicationName',
+        left(p3.pro_code,7) as 'pro_b',
+        right(p3.pro_code,4) as 'pro_e'
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,'0' as sort,
+        product_id,application_id
+        from product where product_id is null)as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,'2'as sort,p1.product_id,
+        p2.application_id
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3
+        LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+        LEFT JOIN location on p3.location_id=location.id
+        LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+        LEFT JOIN application on p3.application_id=application.id
+        )as table1
+on ProductUseRecord.product_id=table1.id
+
+    <where> ProductUseRecord.capUseRecord_id=#{ids};
+    </where>
+    </select>
+
+
+</mapper>

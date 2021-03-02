@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.ProductStatusMapper">
+  <resultMap id="BaseResultMap" type="com.ht70605.entity.ProductStatus">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+
+    <result column="location_id" jdbcType="VARCHAR" property="locationId" />
+    <result column="location_info" jdbcType="VARCHAR" property="locationInfo" />
+    <result column="sysUser_id" jdbcType="VARCHAR" property="sysUserId" />
+    <result column="sysUser_name" jdbcType="VARCHAR" property="sysUserName" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id, update_time, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from productstatus
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from productstatus
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ht70605.entity.ProductStatus">
+    insert into productstatus (id, product_id, update_time, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertList"  statementType="STATEMENT">
+     ${sql}
+  </insert>
+
+  <update id="createTable" parameterType="string" statementType="STATEMENT">
+   CREATE TABLE  ${tName} (
+  `id` varchar(64) COLLATE utf8_bin NOT NULL,
+  `product_id` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `status` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '增加mp状态，包括：\r\n1: 在库\r\n2: 使用中\r\n3: 已配发未完成\r\n4: 已配发已完成\r\n5: 清退中（清点计划下发后）\r\n6: 待销毁（部里清退入库完成后）\r\n7: 已销毁',
+  `location_id` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `location_info` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `sysUser_id` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `sysUser_name` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `department_id` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `department_name` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+  </update>
+
+  <update id="createTempView" parameterType="string" statementType="STATEMENT">
+    create or REPLACE view ${viewName} AS
+   select  product_id,MAX(update_time) 'update_time' from ${tName}
+    GROUP BY product_id
+  </update>
+
+  <update id="createStateView" parameterType="string" statementType="STATEMENT">
+    create or REPLACE view ${viewName} AS
+select table0.*,${tName}.`status`,${tName}.id,${tName}.location_id,${tName}.location_info,${tName}.sysUser_id,
+${tName}.sysUser_name,${tName}.department_id,${tName}.department_name from
+  ${tempview} as table0
+left join ${tName} on table0.product_id=${tName}.product_id and table0.update_time=${tName}.update_time
+order by update_time desc;
+  </update>
+
+  <update id="createFatherProductView" parameterType="string" statementType="STATEMENT">
+    CREATE or REPLACE view ${viewName} as
+   select p.id,p.create_time,p.info,p.level,p.id as product_id,p.dictionary_id,${tName}.location_id,${tName}.location_info,
+        ${tName}.update_time,${tName}.status,location.is_userable,
+				${tName}.sysUser_id,${tName}.sysUser_name,${tName}.department_id,${tName}.department_name,
+				 p.rfid_code as rfid_code,
+				 p.model as model,
+			 p.pro_code  as pro_code,
+				p.ser_num as ser_num,
+				p.application_id  as application_id,
+				dictionary.value as dictionaryValue
+				from
+        product p
+				LEFT JOIN ${tName} ON p.id = ${tName}.product_id
+        LEFT JOIN dictionary on p.dictionary_id=dictionary.id
+        LEFT JOIN location on location.id = ${tName}.location_id
+        LEFT JOIN application on p.application_id=application.id where p.product_id is null;
+  </update>
+
+  <update id="createSonProductView" parameterType="string" statementType="STATEMENT">
+   CREATE or REPLACE view ${viewName} as
+select p1.id,p1.create_time,p1.info,p1.level,p1.product_id,p1.dictionary_id,${tName}.location_id,${tName}.location_info,
+        ${tName}.update_time,${tName}.status,location.is_userable,
+				${tName}.sysUser_id,${tName}.sysUser_name,${tName}.department_id,${tName}.department_name,
+				case when p1.rfid_code is null then p2.rfid_code else p1.rfid_code end as rfid_code,
+				case when p1.model is null then p2.model else p1.model end as model,
+				case when p1.pro_code is null then p2.pro_code else p1.pro_code end as pro_code,
+				case when p1.ser_num is null then p2.ser_num else p1.ser_num end as ser_num,
+				case when p1.application_id is null then p2.application_id else p1.application_id end as application_id,
+				dictionary.value as dictionaryValue
+				from
+        product p1
+        inner join product p2 on p1.product_id=p2.id
+				LEFT JOIN ${tName} ON p1.id = ${tName}.product_id
+        LEFT JOIN dictionary on p1.dictionary_id=dictionary.id
+        LEFT JOIN location on location.id = ${tName}.location_id
+        LEFT JOIN application on p1.application_id=application.id
+				where p1.product_id is not null;
+  </update>
+
+  <insert id="insertSelective" parameterType="com.ht70605.entity.ProductStatus">
+    insert into productstatus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.ProductStatus">
+    update productstatus
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.ProductStatus">
+    update productstatus
+    set product_id = #{productId,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getProductStatusByProductId"  resultMap="BaseResultMap" statementType="STATEMENT">
+    ${sql}
+  </select>
+</mapper>

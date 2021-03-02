@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.ProductincapMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Productincap">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="sysEquipment_id" jdbcType="VARCHAR" property="sysequipmentId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, sysEquipment_id, product_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from productincap
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from productincap
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Productincap">
+        insert into productincap (id, sysEquipment_id, product_id
+        )
+        values (#{id,jdbcType=VARCHAR}, #{sysequipmentId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Productincap">
+        insert into productincap
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sysequipmentId != null">
+                sysEquipment_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="sysequipmentId != null">
+                #{sysequipmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Productincap">
+        update productincap
+        <set>
+            <if test="sysequipmentId != null">
+                sysEquipment_id = #{sysequipmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Productincap">
+        update productincap
+        set sysEquipment_id = #{sysequipmentId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="com.ht70605.entity.Productincap">
+        delete from productincap
+        where sysEquipment_id = #{sysequipmentId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.SysequipmentMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Sysequipment">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="dictionaryID" jdbcType="VARCHAR" property="dictionaryid"/>
+        <result column="locationID" jdbcType="VARCHAR" property="locationid"/>
+        <result column="IP" jdbcType="VARCHAR" property="ip"/>
+        <result column="paramTime" jdbcType="VARCHAR" property="paramtime"/>
+        <result column="paramFrequency" jdbcType="VARCHAR" property="paramfrequency"/>
+        <result column="sysUserID" jdbcType="VARCHAR" property="sysuserid"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="equipmentNo" jdbcType="VARCHAR" property="equipmentNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, dictionaryID, locationID, IP, paramTime, paramFrequency, sysUserID, create_time,
+        update_time, status,equipmentNo
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sysequipment
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from sysequipment
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Sysequipment">
+        insert into sysequipment (id, dictionaryID, locationID,
+        IP, paramTime, paramFrequency,
+        sysUserID, create_time, update_time,equipmentNo,
+        status)
+        values (#{id,jdbcType=VARCHAR}, #{dictionaryid,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR},
+        #{ip,jdbcType=VARCHAR}, #{paramtime,jdbcType=VARCHAR}, #{paramfrequency,jdbcType=VARCHAR},
+        #{sysuserid,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},#{equipmentNo,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Sysequipment">
+        insert into sysequipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dictionaryid != null">
+                dictionaryID,
+            </if>
+            <if test="locationid != null">
+                locationID,
+            </if>
+            <if test="ip != null">
+                IP,
+            </if>
+            <if test="paramtime != null">
+                paramTime,
+            </if>
+            <if test="paramfrequency != null">
+                paramFrequency,
+            </if>
+            <if test="sysuserid != null">
+                sysUserID,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="equipmentNo != null">
+                equipmentNo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionaryid != null">
+                #{dictionaryid,jdbcType=VARCHAR},
+            </if>
+            <if test="locationid != null">
+                #{locationid,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="paramtime != null">
+                #{paramtime,jdbcType=VARCHAR},
+            </if>
+            <if test="paramfrequency != null">
+                #{paramfrequency,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserid != null">
+                #{sysuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNo != null">
+                #{equipmentNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Sysequipment">
+        update sysequipment
+        <set>
+            <if test="dictionaryid != null">
+                dictionaryID = #{dictionaryid,jdbcType=VARCHAR},
+            </if>
+            <if test="locationid != null">
+                locationID = #{locationid,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                IP = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="paramtime != null">
+                paramTime = #{paramtime,jdbcType=VARCHAR},
+            </if>
+            <if test="paramfrequency != null">
+                paramFrequency = #{paramfrequency,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserid != null">
+                sysUserID = #{sysuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNo != null">
+                equipmentNo = #{equipmentNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Sysequipment">
+        update sysequipment
+        set dictionaryID = #{dictionaryid,jdbcType=VARCHAR},
+        locationID = #{locationid,jdbcType=VARCHAR},
+        IP = #{ip,jdbcType=VARCHAR},
+        paramTime = #{paramtime,jdbcType=VARCHAR},
+        paramFrequency = #{paramfrequency,jdbcType=VARCHAR},
+        sysUserID = #{sysuserid,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR}
+        equipmentNo = #{equipmentNo,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.SysequipmentSelect" extends="BaseResultMap">
+        <result column="value" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="departmentid" jdbcType="VARCHAR" property="departmentid"/>
+        <result column="dep_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locationiInfo"/>
+        <result column="sysuserName" jdbcType="VARCHAR" property="sysuserName"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        s.id, s.dictionaryID, s.locationID, s.IP, s.paramTime, s.paramFrequency, s.sysUserID, s.create_time,s.equipmentNo,
+        s.update_time, s.status
+        ,dic.value
+        ,d.id AS departmentid
+        ,d.dep_name
+        ,su.name AS sysuserName
+        ,l.locInfo
+        FROM sysequipment s LEFT JOIN dictionary dic ON s.dictionaryID=dic.id
+        LEFT JOIN location l ON s.locationID=l.id
+        LEFT JOIN department d ON d.id=l.departmentID
+        LEFT JOIN sysuser su ON s.sysUserID=su.id
+        <where>
+            dic.type="sysequipmenttype"
+            <if test="paramEntity.id!=null and paramEntity.id!=''">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.dictionaryValue!=null and paramEntity.dictionaryValue!=''">and dic.value like concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+            </if>
+            <if test="paramEntity.departmentName!=null and paramEntity.departmentName!=''">and d.dep_name like concat(concat('%',#{paramEntity.departmentName}),'%')
+            </if>
+            <if test="paramEntity.ip!=null and paramEntity.ip!=''">and s.IP like concat(concat('%',#{paramEntity.ip}),'%')
+            </if>
+        </where>
+        ORDER BY
+        create_time
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM sysequipment s LEFT JOIN dictionary dic ON s.dictionaryID=dic.id
+        LEFT JOIN location l ON s.locationID=l.id
+        LEFT JOIN department d ON d.id=l.departmentID
+        LEFT JOIN sysuser su ON s.sysUserID=su.id
+        <where>
+            dic.type="sysequipmenttype"
+            <if test="paramEntity.id!=null and paramEntity.id!=''">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.dictionaryValue!=null and paramEntity.dictionaryValue!=''">and dic.value like concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+            </if>
+            <if test="paramEntity.departmentName!=null and paramEntity.departmentName!=''">and d.dep_name like concat(concat('%',#{paramEntity.departmentName}),'%')
+            </if>
+            <if test="paramEntity.ip!=null and paramEntity.ip!=''">and s.IP like concat(concat('%',#{paramEntity.ip}),'%')
+            </if>
+        </where>
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from sysequipment where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+    <!--新建操作查询是否重复 -->
+    <select id="selectByIP" parameterType="com.ht70605.entity.Sysequipment" resultMap="BaseResultMap">
+        select value as 'paramTime',sysequipment.id,sysequipment.equipmentNo from sysequipment
+        left join dictionary on sysequipment.dictionaryID=dictionary.id
+        <where>
+            IP = #{ip}
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.SysuserMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Sysuser">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="pass_word" jdbcType="VARCHAR" property="passWord"/>
+        <result column="department_id" jdbcType="VARCHAR" property="departmentId"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="user_code" jdbcType="VARCHAR" property="userCode"/>
+        <result column="dept_manager" jdbcType="VARCHAR" property="deptManager"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, user_name, pass_word, department_id, info, create_time, update_time, status,user_code
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sysuser
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserByDeptId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        s.*
+        from sysuser  s LEFT JOIN department t ON  t.id = s.department_id
+        where department_id = #{deptId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from sysuser
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Sysuser">
+        insert into sysuser (id, name, user_name,
+        pass_word, department_id, info,
+        create_time, update_time, status
+        )
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+        #{passWord,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR},
+        #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Sysuser">
+        insert into sysuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="passWord != null">
+                pass_word,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null">
+                #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Sysuser">
+        update sysuser
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="passWord != null">
+                pass_word = #{passWord,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Sysuser">
+        update sysuser
+        set name = #{name,jdbcType=VARCHAR},
+        user_name = #{userName,jdbcType=VARCHAR},
+        pass_word = #{passWord,jdbcType=VARCHAR},
+        department_id = #{departmentId,jdbcType=VARCHAR},
+        info = #{info,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.SysuserSelect" extends="BaseResultMap">
+        <result column="dep_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        s.id,
+        s.name,
+        s.user_name,
+        s.pass_word,
+        s.department_id,
+        s.info,
+        s.create_time,
+        s.update_time,
+        s.status,
+        d.dep_name,
+        r.id AS role_id,
+        r.role_name,
+        s.user_code,
+        d.sysUser_id 'dept_manager'
+
+
+        FROM sysuser s LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN userrole u ON u.sysUser_id = s.id
+        LEFT JOIN role r ON r.id = u.role_id
+        <where>
+            <if test="paramEntity.id!=null">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.name!=null and paramEntity.name!=''">and s.name like concat(concat('%',#{paramEntity.name}),'%')
+            </if>
+            <if test="paramEntity.info!=null">and s.info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.userName!=null">and s.user_name like concat(concat('%',#{paramEntity.userName}),'%')
+            </if>
+            <if test="paramEntity.departmentName!=null">and s.department_id =
+                #{paramEntity.departmentName}
+            </if>
+            <if test="paramEntity.userCode!=null">and s.user_code like
+                concat(concat('%',#{paramEntity.userCode}),'%')
+            </if>
+        </where>
+        ORDER BY
+        create_time
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM sysuser s LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN userrole u ON u.sysUser_id = s.id
+        LEFT JOIN role r ON r.id = u.role_id
+        <where>
+            <if test="paramEntity.id!=null">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.name!=null">and s.name like concat(concat('%',#{paramEntity.name}),'%')
+            </if>
+            <if test="paramEntity.info!=null">and s.info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.departmentName!=null">and s.department_id =
+                #{paramEntity.departmentName}
+            </if>
+        </where>
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from sysuser where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+    <!--新建操作查询是否重复 -->
+    <select id="selectByNameAndUserName" parameterType="com.ht70605.entity.Sysuser" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM sysuser s
+        <where>
+            s.name = #{name}
+            OR s.user_name = #{userName}
+        </where>
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sysuser
+    </select>
+    <select id="selectDepartmentIdBySysUserId" parameterType="String" resultType="String">
+        select
+        department_id
+        from sysuser
+        WHERE id=#{sysuserId}
+    </select>
+    <select id="selectSysuserByUserDept" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sysuser
+        WHERE department_id=#{s}
+    </select>
+</mapper>

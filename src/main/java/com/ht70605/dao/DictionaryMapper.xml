@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.DictionaryMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Dictionary">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="value" jdbcType="VARCHAR" property="value"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, type, code, value
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dictionary
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from dictionary
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Dictionary">
+        insert into dictionary (id, type, code,
+        value)
+        values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+        #{value,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Dictionary">
+        insert into dictionary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="value != null">
+                value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Dictionary">
+        update dictionary
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Dictionary">
+        update dictionary
+        set type = #{type,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        value = #{value,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dictionary
+    </select>
+    <select id="selectEquitMent" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dictionary
+        WHERE  type = 'sysequipmenttype'
+    </select>
+    <select id="selectDictionary" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dictionary
+        WHERE type='productType'
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.LogMapper">
+  <resultMap id="BaseResultMap" type="com.ht70605.entity.Log">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sysUser_id" jdbcType="VARCHAR" property="sysuserId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="menu" jdbcType="VARCHAR" property="menu" />
+    <result column="operation_type" jdbcType="VARCHAR" property="operationType" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.ht70605.entity.Log">
+    insert into log (id, sysUser_id, role_id, 
+      menu, operation_type, info, 
+      create_time, update_time, status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{sysuserId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+      #{menu,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+
+
+
+  <!--通过多条件分页查询 -->
+  <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+    select * from log
+    <where>
+      <if test="paramEntity.sysuserId!=null">
+        and sysUser_id like
+        concat(concat('%',#{paramEntity.sysuserId}),'%')
+      </if>
+      <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+        left(create_time, 10)>=#{paramEntity.startTime}
+      </if>
+      <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+        #{paramEntity.endTime}>=left(create_time, 10)
+      </if>
+    </where>
+    ORDER BY
+    create_time desc
+    limit #{start},#{pageSize}
+
+  </select>
+
+  <!--通过多条件分页查询总记录数 -->
+  <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+    select count(1) from log
+    <where>
+      <if test="paramEntity.sysuserId!=null ">and sysUser_id like
+        concat(concat('%',#{paramEntity.sysuserId}),'%')</if>
+      <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+        left(create_time, 10)>=#{paramEntity.startTime}
+      </if>
+      <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+        #{paramEntity.endTime}>=left(create_time, 10)
+      </if>
+    </where>
+
+  </select>
+</mapper>

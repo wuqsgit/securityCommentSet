@@ -1,0 +1,33 @@
+.tree .tree-branch > .tree-branch-header > .tree-branch-name > .icon-item {
+    color: #F9E8CE;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    background-color: #FAFAFA;
+    border: 1px solid #CCC;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    top: -3px;
+    margin-left: -8px;
+}
+
+.tree .tree-selected > .tree-branch-header > .tree-branch-name > .icon-item {
+    background-color: #F9A021;
+    border-color: #F9A021;
+    color: #FFF;
+}
+
+/*.tree .tree-item > .tree-item-name > .ace-icon {*/
+    /*margin-right: 3px;*/
+    /*top:-2px;*/
+/*}*/
+
+.icon-caret ace-icon tree-plus{
+    top: 2.5px;
+}
+

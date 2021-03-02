@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.UserRoleActionMapper">
+  <resultMap id="BaseResultMap" type="com.ht70605.entity.UserRoleAction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+  </resultMap>
+
+  <select id="select" parameterType="com.ht70605.entity.UserRoleAction" resultMap="BaseResultMap">
+    select *
+    from userroleaction
+   WHERE  uid=#{uid} and role_id=#{roleId} and menu_id=#{menuId}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from userroleaction
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht70605.entity.UserRoleAction">
+    insert into userroleaction (id, uid, role_id, 
+      menu_id, action)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+      #{menuId,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="com.ht70605.entity.UserRoleAction">
+    update userroleaction
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

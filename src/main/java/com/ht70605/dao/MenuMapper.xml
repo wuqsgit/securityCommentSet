@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Menu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="sort" jdbcType="VARCHAR" property="sort"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="isShow" jdbcType="VARCHAR" property="isshow"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, pid, sort, name, url, icon, isShow, create_time, update_time, status, info
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from menu
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Menu">
+    insert into menu (id, pid, sort, 
+      name, url, icon, isShow, 
+      create_time, update_time, status, 
+      info)
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{isshow,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Menu">
+        insert into menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="isshow != null">
+                isShow,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="isshow != null">
+                #{isshow,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Menu">
+        update menu
+        <set>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="isshow != null">
+                isShow = #{isshow,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Menu">
+    update menu
+    set pid = #{pid,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <resultMap id="menuResultMap" type="Menu">
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="name" property="node"/>
+        <result column="url" property="url"/>
+        <result column="icon" property="ico"/>
+    </resultMap>
+
+    <!--查询部门 -->
+    <select id="getTree" parameterType="String" resultMap="menuResultMap">
+        SELECT m.*
+        FROM userrole ur LEFT JOIN role r ON ur.role_id = r.id
+          LEFT JOIN authority a ON r.id = a.role_id
+          LEFT JOIN menu m ON a.menu_id = m.id
+        WHERE ur.sysUser_id = #{uId} AND isShow = 1
+        ORDER BY cast(m.sort AS SIGNED)
+    </select>
+
+    <!--查询部门ALL -->
+    <select id="getTreeAll" parameterType="String" resultMap="menuResultMap">
+        select * from menu where isShow=1 order by CAST(sort as UNSIGNED INTEGER)
+    </select>
+</mapper>

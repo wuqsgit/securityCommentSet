@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.DepartmentMapper">
+    <resultMap id="Department" type="com.ht70605.entity.Department">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="dep_name" jdbcType="VARCHAR" property="depName"/>
+        <result column="superDep_id" jdbcType="VARCHAR" property="superDepId"/>
+        <result column="dictionary_id" jdbcType="VARCHAR" property="dictionaryId"/>
+        <result column="sysUser_id" jdbcType="VARCHAR" property="sysUserId"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="dept_sort" jdbcType="VARCHAR" property="deptSort"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <resultMap  id="Dept_View" type="Dept_View" extends="Department">
+        <result column="sysUser_Name" property="sysUserName"/>
+        <result column="superDep_name" property="superDepName"/>
+        <result column="dept_type" property="deptType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, dep_name, superDep_id, dictionary_id, sysUser_id, info, create_time, update_time,
+        status,dept_sort
+    </sql>
+
+    <!--新增 -->
+    <insert id="insert" parameterType="Department">
+    insert into department (id, dep_name, superDep_id,
+    dictionary_id, sysUser_id, info,
+    create_time, update_time, status,dept_sort
+    )
+    values (#{id}, #{depName}, #{superDepId},
+    #{dictionaryId}, #{sysUserId}, #{info},
+    #{createTime}, #{updateTime}, #{status},
+    #{deptSort}
+    )
+    </insert>
+    <!--修改 -->
+    <update id="update" parameterType="Department">
+        update  department set dep_name=#{depName},
+         update_time= #{updateTime},
+         sysUser_id=#{sysUserId},
+         info= #{info}
+         where id=#{id}
+    </update>
+
+    <update id="updateDepatmentAdmin">
+        update  department set
+        sysUser_id=#{userId}
+        where id=#{deptId}
+    </update>
+
+    <!--删除 -->
+    <delete id="delete" parameterType="Department">
+        update  department set
+         update_time= #{updateTime},
+         status= #{status}
+         where id=#{id}
+    </delete>
+    <!--根据上级ID查询所有子节点 -->
+    <select id="selectSuperDeptId" parameterType="Department" resultMap="Dept_View">
+        SELECT
+        d.id,
+        d.dep_name,
+        d.superDep_id,
+        d2.dep_name 'superDep_name',
+        dic.value 'dept_type',
+        d.sysUser_id,
+        s.name  'sysUser_Name',
+        d.create_time,
+        d.update_time,
+        d.info
+        FROM department d LEFT JOIN dictionary dic ON d.dictionary_id = dic.id
+        LEFT JOIN sysuser s ON d.sysUser_id = s.id
+        LEFT JOIN department d2 ON d.superDep_id=d2.id where
+        d.status=1 AND d.superDep_id = #{id} order by d.create_time
+
+    </select>
+
+    <select id="select" parameterType="Department" resultMap="Dept_View">
+
+      SELECT
+        d.id,
+        d.dep_name,
+        d.superDep_id,
+        d2.dep_name 'superDep_name',
+        dic.value 'dept_type',
+        d.sysUser_id,
+        s.name  'sysUser_Name',
+        d.create_time,
+        d.update_time,
+        d.info
+        FROM department d LEFT JOIN dictionary dic ON d.dictionary_id = dic.id
+        LEFT JOIN sysuser s ON d.sysUser_id = s.id
+        LEFT JOIN department d2 ON d.superDep_id=d2.id
+        where d.dep_name=#{depName} and d.status=1
+        <if test="id != null and id!= ''">and
+            d.id =#{id}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Department">
+        select
+        <include refid="Base_Column_List"/>
+        from department
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectSuperDeptByDeptId"  resultMap="Department">
+        SELECT
+        dt.*
+        FROM department d
+        LEFT JOIN  department dt ON dt.id = d.superDep_id
+        where d.status=1
+        <if test="userId != null and userId!= ''">and
+          d.id =#{userId}
+        </if>
+    </select>
+
+    <select id="selectAll" resultMap="Department">
+        select
+        <include refid="Base_Column_List"/>
+        from department
+    </select>
+    <select id="selectDepartmentIdBySysUserId" resultType="String" parameterType="String">
+        select DISTINCT
+        id
+        from department
+        WHERE sysUser_id=#{sysuserId}
+    </select>
+    <select id="selectSysUserIdByDepartmentId" resultType="String" parameterType="String">
+        select DISTINCT
+        sysUser_id
+        from department
+        WHERE id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.TestExcel">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.TestExcel">
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ht70605.entity.TestExcel">
+        insert into
+        testexcel(name,age,address,email)
+        values(#{name,jdbcType=VARCHAR},#{age,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
+    </insert>
+</mapper>

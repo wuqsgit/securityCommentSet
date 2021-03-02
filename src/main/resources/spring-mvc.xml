@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	">
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>test/plain;charset=utf-8</value>
+                            <value>test/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.ht70605.common.LoggerInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 同时开启json格式的支持 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!-- <context:component-scan base-package="*"/> -->
+
+    <!-- 扫描所有的controller 但是不扫描service -->
+    <context:component-scan base-package="com.ht70605">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <!--- 视图解析器 前缀+逻辑名+后缀  例如：modelAndView.setViewName("success")=/jsp/success.jsp;-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--路径前缀 -->
+        <property name="prefix" value="/jsp/"></property>
+        <!--路径后缀 -->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+
+</beans>

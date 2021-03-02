@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.CheckinbillMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Checkinbill">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="dictionary_id" jdbcType="VARCHAR" property="dictionaryId"/>
+        <result column="bill_code" jdbcType="VARCHAR" property="billCode"/>
+        <result column="res_department_id" jdbcType="VARCHAR" property="resDepartmentId"/>
+        <result column="des_department_id" jdbcType="VARCHAR" property="desDepartmentId"/>
+        <result column="sysUser_id" jdbcType="VARCHAR" property="sysuserId"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="location_id" jdbcType="VARCHAR" property="locationId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dictionary_id, bill_code, res_department_id, des_department_id, sysUser_id, result, 
+    info, create_time, update_time, status, location_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from checkinbill
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from checkinbill
+    where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Checkinbill">
+    insert into checkinbill (id, dictionary_id, bill_code, 
+      res_department_id, des_department_id, sysUser_id, 
+      result, info, create_time, 
+      update_time, status, location_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{dictionaryId,jdbcType=VARCHAR}, #{billCode,jdbcType=VARCHAR}, 
+      #{resDepartmentId,jdbcType=VARCHAR}, #{desDepartmentId,jdbcType=VARCHAR}, #{sysuserId,jdbcType=VARCHAR}, 
+      #{result,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{locationId,jdbcType=VARCHAR}
+      )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Checkinbill">
+        insert into checkinbill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dictionaryId != null">
+                dictionary_id,
+            </if>
+            <if test="billCode != null">
+                bill_code,
+            </if>
+            <if test="resDepartmentId != null">
+                res_department_id,
+            </if>
+            <if test="desDepartmentId != null">
+                des_department_id,
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="locationId != null">
+                location_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionaryId != null">
+                #{dictionaryId,jdbcType=VARCHAR},
+            </if>
+            <if test="billCode != null">
+                #{billCode,jdbcType=VARCHAR},
+            </if>
+            <if test="resDepartmentId != null">
+                #{resDepartmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="desDepartmentId != null">
+                #{desDepartmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                #{locationId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Checkinbill">
+        update checkinbill
+        <set>
+            <if test="dictionaryId != null">
+                dictionary_id = #{dictionaryId,jdbcType=VARCHAR},
+            </if>
+            <if test="billCode != null">
+                bill_code = #{billCode,jdbcType=VARCHAR},
+            </if>
+            <if test="resDepartmentId != null">
+                res_department_id = #{resDepartmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="desDepartmentId != null">
+                des_department_id = #{desDepartmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Checkinbill">
+    update checkinbill
+    set dictionary_id = #{dictionaryId,jdbcType=VARCHAR},
+      bill_code = #{billCode,jdbcType=VARCHAR},
+      res_department_id = #{resDepartmentId,jdbcType=VARCHAR},
+      des_department_id = #{desDepartmentId,jdbcType=VARCHAR},
+      sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      location_id = #{locationId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <resultMap extends="BaseResultMap" id="BaseResultMapSelect" type="com.ht70605.entity.CheckinbillSelect">
+        <result column="res_department_name" jdbcType="VARCHAR" property="resDepartmentName"/>
+        <result column="des_department_name" jdbcType="VARCHAR" property="desDepartmentName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locationLocInfo"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT DISTINCT
+        cin.id,
+        cin.dictionary_id,
+        cin.bill_code,
+        cin.res_department_id,
+        cin.des_department_id,
+        cin.sysUser_id,
+        cin.result,
+        cin.info,
+        cin.create_time,
+        cin.update_time,
+        cin.status,
+        cin.location_id,
+        if(l.locInfo IS NULL, "", l.locInfo) AS locInfo,
+        resdep.dep_name AS res_department_name,
+        desdep.dep_name AS des_department_name
+        FROM checkinbill cin LEFT JOIN checkinbillitem c ON cin.id = c.checkInBill_id
+        LEFT JOIN product p ON p.id = c.product_id
+        LEFT JOIN dictionary d ON p.dictionary_id = d.id
+        LEFT JOIN application a ON a.id = p.application_id
+        LEFT JOIN department resdep ON resdep.id=cin.res_department_id
+        LEFT JOIN department desdep ON desdep.id=cin.des_department_id
+        LEFT JOIN location l ON l.id=cin.location_id
+        <where>
+            <if test="paramEntity.id!=null">AND cin.id like
+                concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.productDictionaryId!=null">AND p.dictionary_id like
+                concat(concat('%',#{paramEntity.productDictionaryId}),'%')
+            </if>
+            <if test="paramEntity.productModel!=null">AND p.model like
+                concat(concat('%',#{paramEntity.productModel}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id like
+                concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.locationId!=null">AND cin.location_id like
+                concat(concat('%',#{paramEntity.locationId}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">AND cin.sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+            <if test="paramEntity.result!=null">AND cin.result like
+                concat(concat('%',#{paramEntity.result}),'%')
+            </if>
+            <if test="paramEntity.status!=null">AND cin.status like concat(concat('%',#{paramEntity.status}),'%')
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                left(cin.update_time, 10)>=#{paramEntity.startTime}
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                #{paramEntity.endTime}>=left(cin.update_time, 10)
+            </if>
+        </where>
+        ORDER BY
+        create_time DESC
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT
+        cin.id
+        FROM checkinbill cin LEFT JOIN checkinbillitem c ON cin.id = c.checkInBill_id
+        LEFT JOIN product p ON p.id = c.product_id
+        LEFT JOIN dictionary d ON p.dictionary_id = d.id
+        LEFT JOIN application a ON a.id = p.application_id
+        LEFT JOIN department resdep ON resdep.id=cin.res_department_id
+        LEFT JOIN department desdep ON desdep.id=cin.des_department_id
+        <where>
+            <if test="paramEntity.id!=null">AND cin.id like
+                concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.productDictionaryId!=null">AND p.dictionary_id like
+                concat(concat('%',#{paramEntity.productDictionaryId}),'%')
+            </if>
+            <if test="paramEntity.productModel!=null">AND p.model like
+                concat(concat('%',#{paramEntity.productModel}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id like
+                concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.locationId!=null">AND cin.location_id like
+                concat(concat('%',#{paramEntity.locationId}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">AND cin.sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+            <if test="paramEntity.result!=null">AND cin.result like
+                concat(concat('%',#{paramEntity.result}),'%')
+            </if>
+            <if test="paramEntity.status!=null">AND cin.status like concat(concat('%',#{paramEntity.status}),'%')
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                left(cin.update_time, 10)>=#{paramEntity.startTime}
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                #{paramEntity.endTime}>=left(cin.update_time, 10)
+            </if>
+        </where>
+        ) AS t
+    </select>
+</mapper>

@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Product">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="dictionary_id" jdbcType="VARCHAR" property="dictionaryId"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="sysUser_id" jdbcType="VARCHAR" property="sysuserId"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="location_id" jdbcType="VARCHAR" property="locationId"/>
+        <result column="location_info" jdbcType="VARCHAR" property="locationInfo"/>
+        <result column="application_id" jdbcType="VARCHAR" property="applicationId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="storage" jdbcType="VARCHAR" property="storage"/>
+
+        <result column="dictionaryValue" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="sysuserName" jdbcType="VARCHAR" property="sysuserName"/>
+        <result column="applicationName" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locInfo"/>
+        <result column="depName" jdbcType="VARCHAR" property="depName"/>
+        <result column="pNum" jdbcType="VARCHAR" property="applicationNameNum"/>
+
+        <result column="proCode_begin" jdbcType="VARCHAR" property="proCode_begin"/>
+        <result column="proCode_end" jdbcType="VARCHAR" property="proCode_end"/>
+        <result column="sort" jdbcType="VARCHAR" property="sort"/>
+
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, rfid_code, dictionary_id, model, pro_code, ser_num, sysUser_id, level, location_id,
+        location_info, application_id, product_id, create_time, update_time, status, info,
+        storage
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from product
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Product">
+        insert into product (id, rfid_code, dictionary_id,
+        model, pro_code, ser_num,
+        sysUser_id, level, location_id,
+        location_info, application_id, product_id,
+        create_time, update_time, status,
+        info, storage)
+        values (#{id,jdbcType=VARCHAR}, #{rfidCode,jdbcType=VARCHAR}, #{dictionaryId,jdbcType=VARCHAR},
+        #{model,jdbcType=VARCHAR}, #{proCode,jdbcType=VARCHAR}, #{serNum,jdbcType=VARCHAR},
+        #{sysuserId,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{locationId,jdbcType=VARCHAR},
+        #{locationInfo,jdbcType=VARCHAR}, #{applicationId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+        #{info,jdbcType=VARCHAR}, #{storage,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="rfidCode != null">
+                rfid_code,
+            </if>
+            <if test="dictionaryId != null">
+                dictionary_id,
+            </if>
+            <if test="model != null">
+                model,
+            </if>
+            <if test="proCode != null">
+                pro_code,
+            </if>
+            <if test="serNum != null">
+                ser_num,
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="locationId != null">
+                location_id,
+            </if>
+            <if test="locationInfo != null">
+                location_info,
+            </if>
+            <if test="applicationId != null">
+                application_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="storage != null">
+                storage,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="rfidCode != null">
+                #{rfidCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionaryId != null">
+                #{dictionaryId,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="proCode != null">
+                #{proCode,jdbcType=VARCHAR},
+            </if>
+            <if test="serNum != null">
+                #{serNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                #{locationId,jdbcType=VARCHAR},
+            </if>
+            <if test="locationInfo != null">
+                #{locationInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationId != null">
+                #{applicationId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="storage != null">
+                #{storage,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Product">
+        update product
+        <set>
+            <if test="rfidCode != null">
+                rfid_code = #{rfidCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionaryId != null">
+                dictionary_id = #{dictionaryId,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="proCode != null">
+                pro_code = #{proCode,jdbcType=VARCHAR},
+            </if>
+            <if test="serNum != null">
+                ser_num = #{serNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=VARCHAR},
+            </if>
+            <if test="locationInfo != null">
+                location_info = #{locationInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationId != null">
+                application_id = #{applicationId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="storage != null">
+                storage = #{storage,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Product">
+        update product
+        set rfid_code = #{rfidCode,jdbcType=VARCHAR},
+        dictionary_id = #{dictionaryId,jdbcType=VARCHAR},
+        model = #{model,jdbcType=VARCHAR},
+        pro_code = #{proCode,jdbcType=VARCHAR},
+        ser_num = #{serNum,jdbcType=VARCHAR},
+        sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+        level = #{level,jdbcType=VARCHAR},
+        location_id = #{locationId,jdbcType=VARCHAR},
+        location_info = #{locationInfo,jdbcType=VARCHAR},
+        application_id = #{applicationId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        info = #{info,jdbcType=VARCHAR},
+        storage = #{storage,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        <where>
+            <if test="paramEntity.rfidCode!=null">AND p.rfid_code like concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id like
+                concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.serNum!=null">and p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">and p.sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id like
+                concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.product_id ==null">and p.product_id is null
+            </if>
+            <if test="paramEntity.dictionaryValue!=null">and dic.value =#{paramEntity.dictionaryValue}
+            </if>
+            <if test="paramEntity.applicationName!=null">and app.name like
+                concat(concat('%',#{paramEntity.applicationName}),'%')
+            </if>
+            <if test="paramEntity.proCode_begin!=null">and right(p.pro_code,4) >= CAST( #{paramEntity.proCode_begin} AS
+                UNSIGNED INTEGER)
+            </if>
+            <if test="paramEntity.proCode_end!=null">and CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)>=
+                right(p.pro_code,4)
+            </if>
+
+        </where>
+        ORDER BY
+        p.create_time desc,p.pro_code
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectPageListByMapperId" resultMap="BaseResultMap">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.id in
+            <foreach close=")" collection="array" item="ids" open="(" separator=",">
+                #{ids}
+            </foreach>
+            and p.product_id is null
+        </where>
+        union all
+        (select
+        p4.*, dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName
+        FROM
+        product p4
+        LEFT JOIN dictionary dic ON dic.code = p4.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p4.sysUser_id
+        LEFT JOIN location loc ON loc.id = p4.location_id
+        LEFT JOIN application app ON app.id = p4.application_id
+        LEFT JOIN department dep ON p4.sysUser_id = dep.sysUser_id
+        <where>
+            p4.id in
+            <foreach close=")" collection="array" item="ids" open="(" separator=",">
+                #{ids}
+            </foreach>
+            and p4.product_id not in (
+            SELECT p1.id
+            FROM
+            product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where
+            p1.product_id is not NULL
+            )
+            )
+        </where>
+        <!--<if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>-->
+    </select>
+
+    <select id="selectPageListByLeavesMapper" resultMap="BaseResultMap">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.id in
+            <foreach close=")" collection="array" item="ids" open="(" separator=",">
+                #{ids}
+            </foreach>
+            and p.product_id = #{id}
+        </where>
+        ORDER BY
+        p.create_time
+    </select>
+
+    <select id="selectPageCountByMapperId" resultType="Integer">
+        select
+        COUNT(1)
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.id in
+            <foreach collection="array" open="(" close=")" separator="," item="ids">
+                #{ids}
+            </foreach>
+            and p.product_id is null
+        </where>
+        ORDER BY
+        p.create_time
+    </select>
+
+    <select id="selectPageCountListByMapperId"  resultType="Integer">
+        SELECT COUNT(*) FROM
+        (select
+        DISTINCT p.id
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.id in
+            <foreach collection="array" open="(" close=")" separator="," item="ids">
+                #{ids}
+            </foreach>
+            and p.product_id is null
+        </where>
+        union all
+        (select
+        DISTINCT p4.id
+        FROM
+        product p4
+        LEFT JOIN dictionary dic ON dic.CODE = p4.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p4.sysUser_id
+        LEFT JOIN location loc ON loc.id = p4.location_id
+        LEFT JOIN application app ON app.id = p4.application_id
+        LEFT JOIN department dep ON p4.sysUser_id = dep.sysUser_id
+        <where>
+        p4.id in
+        <foreach close=")" collection="array" item="ids" open="(" separator=",">
+            #{ids}
+        </foreach>
+        and p4.product_id not in (
+        SELECT p1.id
+        FROM
+        product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where
+        p1.product_id is not NULL
+        )
+        )
+        </where>
+        )AS  pro
+    </select>
+
+    <select id="selectPageListProduct" parameterType="page" resultMap="BaseResultMap">
+        select
+        p.*, dic.
+        VALUE
+        AS dictionaryValue,
+        sys. NAME AS sysuserName,
+        app. NAME AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName,
+        dep.id AS deptId
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.status = 1
+            <if test="locationid!=null and locationid!= ''">AND p.location_id = #{locationid}
+            </if>
+            <if test="departmentid !=null and departmentid !=''">AND dep.id = #{departmentid}
+            </if>
+            <if test="dictionaryid!=null and dictionaryid!=''">and p.dictionary_id = #{dictionaryid}
+            </if>
+            <if test="applicationid!=null and applicationid!=''">and p.application_id = #{applicationid}
+            </if>
+            AND p.product_id is null
+        </where>
+        union all
+        (select
+        p4.*, dic.
+        VALUE
+        AS dictionaryValue,
+        sys. NAME AS sysuserName,
+        app. NAME AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName,
+        dep.id AS deptId
+        FROM
+        product p4
+        LEFT JOIN dictionary dic ON dic.CODE = p4.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p4.sysUser_id
+        LEFT JOIN location loc ON loc.id = p4.location_id
+        LEFT JOIN application app ON app.id = p4.application_id
+        LEFT JOIN department dep ON p4.sysUser_id = dep.sysUser_id
+        <where>
+            p4.status = 1
+            <if test="locationid!=null and locationid!= ''">AND p4.location_id = #{locationid}
+            </if>
+            <if test="departmentid !=null and departmentid !=''">AND dep.id = #{departmentid}
+            </if>
+            <if test="dictionaryid!=null and dictionaryid!=''">and p4.dictionary_id = #{dictionaryid}
+            </if>
+            <if test="applicationid!=null and applicationid!=''">and p4.application_id = #{applicationid}
+            </if>
+            and p4.product_id not in (
+            SELECT p1.id
+            FROM
+            product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where
+            p1.product_id is not NULL
+            )
+            )
+        </where>
+    </select>
+
+    <select id="selectPageListMapper" parameterType="page" resultMap="BaseResultMap">
+        select
+        p.*, dic.
+        VALUE
+        AS dictionaryValue,
+        sys. NAME AS sysuserName,
+        app. NAME AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName,
+        dep.id AS deptId
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            p.status = 1
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id =#{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like
+                concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.product_id ==null">and product_id is null
+            </if>
+        </where>
+        union all
+        (select
+        p4.*, dic.
+        VALUE
+        AS dictionaryValue,
+        sys. NAME AS sysuserName,
+        app. NAME AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName,
+        dep.id AS deptId
+        FROM
+        product p4
+        LEFT JOIN dictionary dic ON dic.CODE = p4.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p4.sysUser_id
+        LEFT JOIN location loc ON loc.id = p4.location_id
+        LEFT JOIN application app ON app.id = p4.application_id
+        LEFT JOIN department dep ON p4.sysUser_id = dep.sysUser_id
+        <where>
+            p4.status = 1
+            <if test="paramEntity.locationId!=null">AND p4.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p4.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p4.application_id =#{paramEntity.applicationId}
+            </if>
+            and p4.product_id not in (
+            SELECT p1.id
+            FROM
+            product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where
+            p1.product_id is not NULL
+            )
+            )
+        </where>
+
+       <!-- <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>-->
+    </select>
+
+    <select id="selectPageListMapperTwo" parameterType="page" resultMap="BaseResultMap">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like
+                concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            AND p.product_id is null
+            and p.id NOT IN (
+            select
+            case when m.id is null then '' else m.id end as mid
+            from returnobject i LEFT JOIN returnobjectitem it ON it.returnObject_id = i.id LEFT JOIN
+            product m ON m.id = it.product_id
+            <where>
+                <if test="paramEntity.searchDepartment!=null">AND i.department_id = #{paramEntity.searchDepartment}
+                </if>
+            </where>
+            )
+        </where>
+        ORDER BY
+        p.create_time
+       <!-- <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>-->
+    </select>
+
+    <select id="selectReturnobjPageListProduct" parameterType="page" resultMap="BaseResultMap">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo,
+        dep.dep_name AS depName
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="locationId!=null and locationId != ''">AND p.location_id = #{locationId}
+            </if>
+            <if test="departmentId!=null and departmentId != ''">AND dep.id = #{departmentId}
+            </if>
+            <if test="dictionaryId!=null and dictionaryId!= ''">and p.dictionary_id =#{dictionaryId}
+            </if>
+            <if test="applicationId!=null and applicationId!=''">and p.application_id = #{applicationId}
+            </if>
+            and product_id is null
+            and p.id NOT IN (
+            select
+            case when m.id is null then '' else m.id end as mid
+            from returnobject i LEFT JOIN returnobjectitem it ON it.returnObject_id = i.id LEFT JOIN
+            product m ON m.id = it.product_id
+            <where>
+                <if test="departmentId !=null">AND i.department_id = #{departmentId}
+                </if>
+            </where>
+            )
+        </where>
+    </select>
+
+    <select id="selectPageListCountMapper" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (select
+        DISTINCT p.id
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like
+                concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.product_id ==null">and product_id is null
+            </if>
+        </where>
+        union all
+        (select
+        DISTINCT p4.id
+        FROM
+        product p4
+        LEFT JOIN dictionary dic ON dic.CODE = p4.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p4.sysUser_id
+        LEFT JOIN location loc ON loc.id = p4.location_id
+        LEFT JOIN application app ON app.id = p4.application_id
+        LEFT JOIN department dep ON p4.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p4.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p4.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p4.application_id =#{paramEntity.applicationId}
+            </if>
+            and p4.product_id not in (
+            SELECT p1.id
+            FROM
+            product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where
+            p1.product_id is not NULL
+            )
+            )
+        </where>
+        ) AS prod
+    </select>
+
+    <select id="selectPageCountListMapper" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (select
+        DISTINCT p.id
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like</if>
+            <if test="paramEntity.product_id ==null">concat(concat('%',#{paramEntity.info}),'%')and product_id is null
+            </if>
+        </where>
+
+        union all
+        (select
+        DISTINCT p.id
+        FROM
+        product p
+        LEFT JOIN dictionary dic ON dic. CODE = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null and paramEntity.">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id =#{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like
+                concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            and product_id not in (SELECT p1.id
+            FROM
+            product p1 LEFT JOIN product p2 ON p1.sysUser_id != p2.sysUser_id and p1.product_id = p2.id where p1.product_id is not NULL
+            )
+            )
+        </where>
+        ) AS prod
+    </select>
+
+    <select id="selectPageCountListMapperTwo" parameterType="page" resultType="Integer">
+        select
+        COUNT(1)
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        LEFT JOIN department dep ON p.sysUser_id = dep.sysUser_id
+        <where>
+            <if test="paramEntity.locationId!=null">AND p.location_id = #{paramEntity.locationId}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.info!=null">and p.info like
+                concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.product_id ==null">and p.product_id is null
+            </if>
+            and p.id NOT IN (
+            select
+            case when m.id is null then '' else m.id end as a
+            from returnobject i
+            LEFT JOIN returnobjectitem it ON it.returnObject_id = i.id
+            LEFT JOIN product m ON m.id = it.product_id
+            <where>
+                <if test="paramEntity.searchDepartment!=null">AND i.department_id = #{paramEntity.searchDepartment}
+                </if>
+            </where>
+            )
+        </where>
+    </select>
+
+    <!--模糊查询叶子  11111 -->
+    <select id="selectSignalAndLeaves" parameterType="page" resultMap="BaseResultMap">
+        SELECT
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo
+        FROM product p LEFT JOIN dictionary dic ON dic.`code` = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+         <where>
+        p.product_id =#{paramEntity.id} AND p.status=1
+       and (p.sysUser_id is null
+             <if test="paramEntity.sysuserId!=null">OR
+             p.sysUser_id =#{paramEntity.sysuserId}
+             </if>
+         )
+          </where>
+    </select>
+
+
+    <!--查询现有密品的系统名对应数量-->
+    <select id="selectApplicationNum" parameterType="page" resultMap="BaseResultMap">
+        SELECT COUNT(p.id) as pNum, a.name as applicationName
+        FROM
+        (SELECT *
+        from
+        (select * from
+        (select
+        id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id,level
+
+        from product where product_id is null or product_id not in
+        (SELECT id
+        FROM
+        product where product.product_id is null
+        ))as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+        p2.application_id as application_id,p1.level
+
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3)p
+
+        LEFT JOIN application as a ON p.application_id = a.id
+        LEFT JOIN sysuser as su ON p.sysUser_id = su.id
+        LEFT JOIN dictionary as di ON p.dictionary_id = di.id
+        <!--<where>-->
+        <!--<if test="paramEntity.deptid!=null">AND su.department_id = #{paramEntity.deptid}-->
+        <!--</if>-->
+        <!--</where>-->
+        GROUP BY a.id
+        ORDER BY applicationName
+    </select>
+
+    <!--查询现有密品的系统名对应密品各类别数量-->
+    <select id="selectProductNumByApplication" parameterType="page" resultMap="BaseResultMap">
+        SELECT COUNT(p.id) as pNum, a.name as applicationName,di.value as dictionaryValue
+        FROM
+        (SELECT *
+        from
+        (select * from
+        (select
+        id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id,level
+
+        from product where product_id is null or product_id not in
+        (SELECT id
+        FROM
+        product where product.product_id is null
+        ))as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+        p2.application_id as application_id,p1.level
+
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3)p
+
+        LEFT JOIN application as a ON p.application_id = a.id
+        LEFT JOIN sysuser as su ON p.sysUser_id = su.id
+        LEFT JOIN dictionary as di ON p.dictionary_id = di.id
+        <!--<where>-->
+        <!--<if test="paramEntity.deptid!=null">AND su.department_id = #{paramEntity.deptid}-->
+        <!--</if>-->
+        <!--</where>-->
+        GROUP BY di.id,applicationName
+        ORDER BY applicationName,di.value
+    </select>
+
+    <!--查询对应密品各类别数量-->
+    <select id="selectProductNumByType" parameterType="page" resultMap="BaseResultMap">
+        SELECT COUNT(p.id) as pNum,di.value as dictionaryValue
+        FROM
+        (SELECT *
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id,level
+
+        from product where product_id  is null or  product_id not in
+  (SELECT id
+     FROM
+     product where product.product_id is null
+   ))as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+        p2.application_id as application_id,p1.level
+
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3)p
+
+        LEFT JOIN application as a ON p.application_id = a.id
+        LEFT JOIN sysuser as su ON p.sysUser_id = su.id
+        LEFT JOIN dictionary as di ON p.dictionary_id = di.id
+        GROUP BY di.id
+        ORDER BY pNum DESC
+    </select>
+
+    <select id="selectProductNumByLocation" parameterType="page" resultMap="BaseResultMap">
+        SELECT COUNT(p.id) as pNum,l.locInfo
+        FROM
+        (SELECT *
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id,level
+
+        from product where product_id  is null or  product_id not in
+  (SELECT id
+     FROM
+     product where product.product_id is null
+   ))as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+        p2.application_id as application_id,p1.level
+
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3)p
+
+        LEFT JOIN application as a ON p.application_id = a.id
+        LEFT JOIN sysuser as su ON p.sysUser_id = su.id
+        LEFT JOIN dictionary as di ON p.dictionary_id = di.id
+        LEFT JOIN location as l ON p.location_id = l.id
+
+        GROUP BY l.locInfo
+        ORDER BY pNum DESC
+    </select>
+
+
+    <!--模糊查询叶子 -->
+    <select id="selectSignalLeaves" resultMap="BaseResultMap">
+        SELECT
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo
+        FROM product p LEFT JOIN dictionary dic ON dic.`code` = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        WHERE p.product_id =#{id} AND p.status=1
+        ORDER BY
+        create_time
+    </select>
+
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        COUNT(1)
+        FROM product p LEFT JOIN dictionary dic ON dic.id = p.id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        <where>
+            <if test="paramEntity.rfidCode!=null">AND p.rfid_code like concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and p.dictionary_id like
+                concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.serNum!=null">and p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">and p.sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">and p.application_id like
+                concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.product_id ==null">and p.product_id is null
+            </if>
+            <if test="paramEntity.dictionaryValue!=null">and dic.value like
+                concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+            </if>
+            <if test="paramEntity.applicationName!=null">and app.name like
+                concat(concat('%',#{paramEntity.applicationName}),'%')
+            </if>
+            <if test="paramEntity.proCode_begin!=null">and right(p.pro_code,4) >= CAST( #{paramEntity.proCode_begin} AS
+                UNSIGNED INTEGER)
+            </if>
+            <if test="paramEntity.proCode_end!=null">and CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)>=
+                right(p.pro_code,4)
+            </if>
+        </where>
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from product where id in
+        <foreach close=")" collection="array" item="pk" open="(" separator=",">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <resultMap extends="BaseResultMap" id="BaseResultMapSelect" type="com.ht70605.entity.ProductForRecord">
+        <result column="record_type" jdbcType="VARCHAR" property="recordType"/>
+        <result column="record_time" jdbcType="VARCHAR" property="recordTime"/>
+        <result column="sysEquipment_value" jdbcType="VARCHAR" property="sysEquipmentValue"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDycForRecord" parameterType="page" resultMap="BaseResultMapSelect">
+        select
+        p.*,
+        dic.value AS dictionaryValue,
+        sys.name AS sysuserName,
+        app.name AS applicationName,
+        loc.locInfo AS locInfo
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN sysuser sys ON sys.id = p.sysUser_id
+        LEFT JOIN location loc ON loc.id = p.location_id
+        LEFT JOIN application app ON app.id = p.application_id
+        <where>
+            <if test="paramEntity.dictionaryId!=null">AND dic.id like
+                concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.rfidCode!=null">AND p.rfid_code like concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">AND p.sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+        </where>
+        order by p.pro_code
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDycForRecord" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT
+        p.rfid_code
+        FROM product p LEFT JOIN
+        (SELECT
+        acc.sysEquipment_id,
+        'access' AS record_type,
+        acc.access_time AS record_time,
+        product_id
+        FROM accesscontrol acc
+        UNION
+        SELECT
+        ala.sysEquipment_id,
+        'alarm' AS record_type,
+        ala.alarm_time AS record_time,
+        product_id
+        FROM alarmrecord ala
+        UNION
+        SELECT
+        cap.sysEquipment_id,
+        'productuse' AS record_type,
+        cap.time_start AS record_time,
+        pro.product_id
+        FROM productuserecord pro LEFT JOIN capuserecord cap ON pro.capUseRecord_id = cap.id) AS t
+        ON p.product_id = t.product_id
+        LEFT JOIN dictionary dic ON p.dictionary_id = dic.id
+        LEFT JOIN sysequipment sys ON t.sysEquipment_id = sys.id
+        LEFT JOIN dictionary dic1 ON sys.dictionaryID = dic1.id
+        <where>
+            <if test="paramEntity.dictionaryId!=null">AND dic.id like
+                concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.model!=null">AND p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">AND p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+        </where>
+        ) AS ta
+    </select>
+
+    <select id="selectAll" parameterType="page" resultMap="BaseResultMapSelect">
+        select * from product as p
+        <where>
+            <if test="paramEntity.id!=null">AND p.sysUser_id like concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOneById" parameterType="String" resultMap="BaseResultMapSelect">
+        SELECT
+          p.*,
+          d.value AS dictionaryValue
+        FROM product p LEFT JOIN dictionary d ON p.dictionary_id = d.id
+        WHERE p.id = #{id}
+    </select>
+
+    <!--AddForm模糊查询 -->
+    <select id="selectPageListAddFormSelect" parameterType="page" resultMap="BaseResultMap">
+        SELECT
+        p.*,
+        dic.value AS dictionaryValue,
+        app.name AS applicationName
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN application app ON app.id = p.application_id
+        <where>
+            <if test="keyWord =='random'">
+                p.product_id like concat(concat('%',#{paramEntity.id}),'%')
+                AND p.storage is NOT NULL
+                AND p.storage != '0'
+            </if>
+            <if test="keyWord =='product'">
+                p.product_id is NULL
+                <if test="paramEntity.rfidCode!=null">AND p.rfid_code like
+                    concat(concat('%',#{paramEntity.rfidCode}),'%')
+                </if>
+                <if test="paramEntity.model!=null">AND p.model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">AND p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id like
+                    concat(concat('%',#{paramEntity.dictionaryId}),'%')
+                </if>
+                <if test="paramEntity.applicationId!=null">AND p.application_id like
+                    concat(concat('%',#{paramEntity.applicationId}),'%')
+                </if>
+                <if test="paramEntity.dictionaryValue!=null">AND dic.value like
+                    concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+                </if>
+                <if test="paramEntity.applicationName!=null">AND app.name like
+                    concat(concat('%',#{paramEntity.applicationName}),'%')
+                </if>
+                <!--<if test="paramEntity.dictionaryValue!=null">AND dic.id like-->
+                <!--concat(concat('%',#{paramEntity.dictionaryValue}),'%')-->
+                <!--</if>-->
+                <!--<if test="paramEntity.applicationName!=null">AND app.name like-->
+                <!--concat(concat('%',#{paramEntity.applicationName}),'%')-->
+                <!--</if>-->
+            </if>
+        </where>
+        ORDER BY
+        id,product_id
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <!--AddForm模糊查询条数 -->
+    <select id="selectPageCountAddFormSelect" parameterType="page" resultMap="BaseResultMap">
+        SELECT
+        COUNT(1)
+        FROM product p LEFT JOIN dictionary dic ON dic.code = p.dictionary_id
+        LEFT JOIN application app ON app.id = p.application_id
+        <where>
+            <if test="keyWord =='random'">
+                p.product_id like concat(concat('%',#{paramEntity.id}),'%')
+                AND p.storage is NOT NULL
+                AND p.storage != '0'
+            </if>
+            <if test="keyWord =='product'">
+                p.product_id is NULL
+                <if test="paramEntity.rfidCode!=null">AND p.rfid_code like
+                    concat(concat('%',#{paramEntity.rfidCode}),'%')
+                </if>
+                <if test="paramEntity.model!=null">AND p.model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">AND p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id like
+                    concat(concat('%',#{paramEntity.dictionaryId}),'%')
+                </if>
+                <if test="paramEntity.applicationId!=null">AND p.application_id like
+                    concat(concat('%',#{paramEntity.applicationId}),'%')
+                </if>
+                <if test="paramEntity.dictionaryValue!=null">AND dic.value like
+                    concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+                </if>
+                <if test="paramEntity.applicationName!=null">AND app.name like
+                    concat(concat('%',#{paramEntity.applicationName}),'%')
+                </if>
+            </if>
+        </where>
+    </select>
+    <!--FF新增一个复杂查询用于密品信息查询2017-07-20 -->
+    <!--<select id="selectListByParamEntity" parameterType="page" resultMap="BaseResultMap">-->
+        <!--select * from-->
+        <!--(select p3.*,-->
+        <!--dictionary.value as 'dictionaryValue',-->
+        <!--location.locInfo,-->
+        <!--sysuser.name as 'sysuserName',-->
+        <!--application.name as 'applicationName',-->
+        <!--left(p3.pro_code,7) as 'pro_b',-->
+        <!--right(p3.pro_code,4) as 'pro_e'-->
+        <!--from-->
+        <!--(select * from-->
+        <!--(select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,'0' as sort,-->
+        <!--product_id,application_id-->
+        <!--from product where product_id is null)as p0-->
+        <!--union all-->
+        <!--(select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,-->
+        <!--p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,'2'as sort,p1.product_id,-->
+        <!--p2.application_id-->
+        <!--from-->
+        <!--(select * from product where product_id is not null)as p1-->
+        <!--inner join product as p2 on p1.product_id=p2.id))as p3-->
+        <!--LEFT JOIN dictionary on p3.dictionary_id=dictionary.id-->
+        <!--LEFT JOIN location on p3.location_id=location.id-->
+        <!--LEFT JOIN sysuser on p3.sysUser_id=sysuser.id-->
+        <!--LEFT JOIN application on p3.application_id=application.id-->
+        <!--)as table0-->
+        <!--<where>-->
+            <!--<if test="paramEntity.rfidCode!=null">AND rfid_code like-->
+                <!--concat(concat('%',#{paramEntity.rfidCode}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.dictionaryId!=null">and dictionary_id like-->
+                <!--concat(concat('%',#{paramEntity.dictionaryId}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.serNum!=null">and ser_num like concat(concat('%',#{paramEntity.serNum}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.sysuserId!=null">and sysUser_id like-->
+                <!--concat(concat('%',#{paramEntity.sysuserId}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.applicationId!=null">and application_id like-->
+                <!--concat(concat('%',#{paramEntity.applicationId}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.dictionaryValue!=null">and dictionaryValue like-->
+                <!--concat(concat('%',#{paramEntity.dictionaryValue}),'%')-->
+            <!--</if>-->
+            <!--<if test="paramEntity.applicationName!=null">and applicationName like-->
+                <!--concat(concat('%',#{paramEntity.applicationName}),'%')-->
+            <!--</if>-->
+            <!--&lt;!&ndash;<if test="paramEntity.proCode_begin!=null" > and right(p.pro_code,4) >= CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)&ndash;&gt;-->
+            <!--&lt;!&ndash;</if>&ndash;&gt;-->
+            <!--&lt;!&ndash;<if test="paramEntity.proCode_end!=null" >  and CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)>= right(p.pro_code,4)&ndash;&gt;-->
+            <!--&lt;!&ndash;</if>&ndash;&gt;-->
+        <!--</where>-->
+        <!--ORDER BY-->
+        <!--create_time desc,pro_code-->
+        <!--<if test="pageSize!=null">limit #{start},#{pageSize}-->
+        <!--</if>-->
+    <!--</select>-->
+    <!--FF更新采用视图查询用于密品信息查询子查父 2017-09-02 -->
+    <select id="selectListByParamEntity" parameterType="page" resultMap="BaseResultMap">
+        ${SQL}
+    </select>
+
+    <!--FF新增一个复杂查询计算总数用于密品信息查询2017-07-20 -->
+    <select id="selectListByParamEntityCount" parameterType="page" resultType="Integer">
+        select count(1) from
+        (select p3.*,
+        dictionary.value as 'dictionaryValue',
+        location.locInfo,
+        sysuser.name as 'sysuserName',
+        application.name as 'applicationName',
+        left(p3.pro_code,7) as 'pro_b',
+        right(p3.pro_code,4) as 'pro_e'
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,'0' as sort,
+        product_id,application_id
+        from product where product_id is null)as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,'2'as sort,p1.product_id,
+        p2.application_id
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3
+        LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+        LEFT JOIN location on p3.location_id=location.id
+        LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+        LEFT JOIN application on p3.application_id=application.id
+        )as table0
+        <where>
+            <if test="paramEntity.rfidCode!=null">AND rfid_code like
+                concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.dictionaryId!=null">and dictionary_id like
+                concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.serNum!=null">and ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.sysuserId!=null">and sysUser_id like
+                concat(concat('%',#{paramEntity.sysuserId}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">and application_id like
+                concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.dictionaryValue!=null">and dictionaryValue like
+                concat(concat('%',#{paramEntity.dictionaryValue}),'%')
+            </if>
+            <if test="paramEntity.applicationName!=null">and applicationName like
+                concat(concat('%',#{paramEntity.applicationName}),'%')
+            </if>
+            <!--<if test="paramEntity.proCode_begin!=null" > and right(p.pro_code,4) >= CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)-->
+            <!--</if>-->
+            <!--<if test="paramEntity.proCode_end!=null" >  and CAST( #{paramEntity.proCode_begin} AS UNSIGNED INTEGER)>= right(p.pro_code,4)-->
+            <!--</if>-->
+        </where>
+
+    </select>
+</mapper>

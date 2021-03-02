@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ht70605.dao.DeptMapperDao">
+
+    <resultMap type="Dept" id="Dept">
+        <id property="id" column="id"/>
+        <result column="dep_name" property="deptName"/>
+        <result column="superDep_id" property="superDeptId"/>
+        <result column="value" property="dictionaryValue"/>
+        <result column="sysUser_id" property="sysUserId"/>
+        <result column="sysUser_Name" property="sysUserName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <!--新增部门 -->
+    <insert id="insert" parameterType="Dept">
+        INSERT INTO department (id, dep_name, superDep_id, sysUser_id, info, create_time, update_time, status)
+        VALUES (#{id}, #{deptName}, #{superDeptId}, #{sysUserId}, #{info}, #{createTime}, #{updateTime}, #{status})
+    </insert>
+    <!--查询部门 -->
+    <select id="select" parameterType="Dept" resultMap="Dept">
+        select * from department WHERE id=#{id}
+    </select>
+    <!--查询全部部门 -->
+    <select id="selectAll" resultMap="Dept">
+         select * from department ORDER  BY status
+    </select>
+    <!--模糊查询 -->
+    <select id="selectBlurDeptId" parameterType="page" resultMap="Dept">
+        SELECT
+        d.id,
+        d.dep_name,
+        d.superDep_id,
+        dic.value,
+        d.sysUser_id,
+        s.name AS sysUser_Name,
+        d.create_time,
+        d.info
+        FROM department d LEFT JOIN dictionary dic ON d.dictionary_id = dic.id
+        LEFT JOIN sysuser s ON d.sysUser_id = s.id
+        <where>
+            <if test="paramEntity.id!=null">AND d.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.deptName!=null">and d.dep_name like concat(concat('%',#{paramEntity.deptName}),'%')
+            </if>
+            <if test="paramEntity.sysUserName!=null">and s.name like concat(concat('%',#{paramEntity.sysUserName}),'%')
+            </if>
+        </where>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectSignalAndLeaves" parameterType="page" resultMap="Dept">
+        SELECT
+        d.id,
+        d.dep_name,
+        d.superDep_id,
+        dic.value,
+        d.sysUser_id,
+        s.name AS sysUser_Name,
+        d.create_time,
+        d.info
+        FROM department d LEFT JOIN dictionary dic ON d.dictionary_id = dic.id
+        LEFT JOIN sysuser s ON d.sysUser_id = s.id
+        WHERE d.superDep_id LIKE concat(concat('%', #{paramEntity.superDeptId}), '%') AND d.status=1
+        ORDER BY
+        superDep_id,
+        length(d.superDep_id) / 8,
+        create_time
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from department where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+    <!--更新部门 -->
+    <select id="update">
+        UPDATE department
+        SET
+          id            = #{id},
+          dep_name       = #{deptName},
+          superDep_id   = #{superDeptId},
+          sysUser_id    = #{sysUserId},
+          dictionary_id = #{dictionaryId},
+          info          = #{info},
+          update_time   = #{updateTime},
+          create_time   = #{createTime}
+        WHERE (id = #{id})
+    </select>
+</mapper>

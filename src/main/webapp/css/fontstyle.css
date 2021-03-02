@@ -1,0 +1,30 @@
+/*.fontFamliy{*/
+    /*font-size:12px;*/
+	/*font-family:"Microsoft YaHei";*/
+/*}*/
+.layui-layer-title{
+    background:#47a0db;
+    color:#fff; border: none;
+}
+
+.layui-layer-btn {
+    text-align: center;
+    padding: 0 10px 12px;
+    pointer-events: auto;
+    user-select: none;
+    -webkit-user-select: none;
+}
+/*自定义圆角按钮*/
+.btn-zidingyi{
+    border-radius: 5px 5px 5px 5px
+}
+/*!*模块导航条*!*/
+/*.breadcrumbs {*/
+    /*position: relative;*/
+    /*z-index: auto;*/
+    /*border-bottom: 1px solid #E5E5E5;*/
+    /*background-color: #F5F5F5;*/
+    /*min-height: 30px;*/
+    /*line-height: 40px;*/
+    /*padding: 0 12px 0 0;*/
+/*}*/

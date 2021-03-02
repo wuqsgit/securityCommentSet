@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.ApplicationMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Application">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, info, create_time, update_time, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from application
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from application
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Application">
+    insert into application (id, name, info, 
+      create_time, update_time, status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Application">
+        insert into application
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Application">
+        update application
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Application">
+    update application
+    set name = #{name,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM application
+        <where>
+            <if test="paramEntity.id!=null">AND id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.name!=null">and name = #{paramEntity.name}
+            </if>
+            <if test="paramEntity.info!=null">and info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.allName!=null">and name = #{paramEntity.allName}
+            </if>
+        </where>
+        ORDER BY
+        create_time
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM application
+        <where>
+            <if test="paramEntity.id!=null">AND id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.name!=null">and name = #{paramEntity.name}
+            </if>
+            <if test="paramEntity.info!=null">and info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.allName!=null">and name = #{paramEntity.allName}
+            </if>
+        </where>
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from application where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <!--查询所有系统 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from application
+        where status = 1
+    </select>
+    <!--检查所属系统名称是否存在 -->
+    <select id="selectByName" parameterType="page" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM application
+        <where>
+            <if test="paramEntity.name!=null">and name = #{paramEntity.name}
+            </if>
+
+        </where>
+        ORDER BY
+        create_time
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+</mapper>

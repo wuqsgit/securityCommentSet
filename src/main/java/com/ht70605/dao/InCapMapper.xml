@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.InCapMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.InCap">
+        <id column="id" jdbcType="VARCHAR" property="incapid"/>
+        <result column="usename" jdbcType="VARCHAR" property="usename"/>
+        <result column="equipment" jdbcType="VARCHAR" property="equipment"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionaryType" jdbcType="VARCHAR" property="dictionaryType"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="application" jdbcType="VARCHAR" property="application"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+        <result column="productnum" jdbcType="VARCHAR" property="productnum"/>
+        <result column="productId" jdbcType="VARCHAR" property="productId"/>
+        <result column="sysIp" jdbcType="VARCHAR" property="sysIp"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, sysEquipment_id, access_time
+    </sql>
+    <!--查询所有数据 -->
+    <select id="selectAll"  resultMap="BaseResultMap">
+    </select>
+
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+        <if test="paramEntity.searchUser==null">
+            SELECT sysEquipment_id as id,name as usename,equipmentNo,CONCAT(dicValue,equipmentNo) as equipment,locInfo as location,COUNT(table0.id) as productnum,pro_code,ser_num,value as dictionaryType,model,application_name as application,rfid_code,dep_name as deptname,table1.dictionary_id as d_id,
+            sysIp
+            from
+            (select ProductInCap.*,sysequipment.equipmentNo,sysequipment.IP AS sysIp,dictionary.`value` AS dicValue  from ProductInCap
+            left join sysequipment on ProductInCap.sysEquipment_id=sysequipment.id
+            LEFT JOIN dictionary ON sysequipment.dictionaryID = dictionary.id)as table0
+            left join
+            (select p3.*,
+            dictionary.`value`,
+            location.locInfo,
+            sysuser.name,
+            application.`name`as application_name
+            from
+            (select * from
+            (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id
+            from product where product_id  is null)as p0
+            union all
+            (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+            p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+            p2.application_id as application_id
+            from
+            (select * from product where product_id is not null)as p1
+            inner join product as p2 on p1.product_id=p2.id))as p3
+            LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+            LEFT JOIN location on p3.location_id=location.id
+            LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+            LEFT JOIN application on p3.application_id=application.id
+            )as table1
+            on table0.product_id=table1.id
+            left join
+            (select sysuser.id,department.id as dept_id,department.dep_name FROM sysuser
+            left join department on sysuser.department_id=department.id
+            )as p4 on table1.sysUser_id=p4.id
+            <where>
+                sysEquipment_id is not null
+                <!--<if test="paramEntity.deptid!=null">AND s.department_id = #{paramEntity.deptid}-->
+                <!--</if>-->
+                <if test="paramEntity.serNum!=null">AND ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryType!=null">and table1.dictionary_id like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+                </if>
+                <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.equipmentNo!=null">and equipmentNo like concat(concat('%',#{paramEntity.equipmentNo}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.usename!=null">AND name like concat(concat('%',#{paramEntity.usename}),'%')
+                </if>
+                <if test="paramEntity.capuseid!=null">AND sysEquipment_id = #{paramEntity.capuseid}
+                </if>
+            </where>
+            GROUP BY sysEquipment_id
+        </if>
+        <if test="paramEntity.searchUser!=null">
+            SELECT sysEquipment_id as id,name as usename,equipmentNo,CONCAT(value,equipmentNo) as equipment,locInfo as location,pro_code,ser_num,value as dictionaryType,model,application_name as application,rfid_code,dep_name as deptname,table1.dictionary_id as d_id
+            from
+            (select ProductInCap.*,sysequipment.equipmentNo from ProductInCap
+            left join sysequipment on ProductInCap.sysEquipment_id=sysequipment.id)as table0
+            left join
+            (select p3.*,
+            dictionary.`value`,
+            location.locInfo,
+            sysuser.name,
+            application.`name`as application_name
+            from
+            (select * from
+            (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id
+            from product where product_id  is null)as p0
+            union all
+            (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+            p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+            p2.application_id as application_id
+            from
+            (select * from product where product_id is not null or  product_id not in
+            (SELECT id
+            FROM
+            product where product.product_id is null
+            ))as p1
+            inner join product as p2 on p1.product_id=p2.id))as p3
+            LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+            LEFT JOIN location on p3.location_id=location.id
+            LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+            LEFT JOIN application on p3.application_id=application.id
+            )as table1
+            on table0.product_id=table1.id
+            left join
+            (select sysuser.id,department.id as dept_id,department.dep_name FROM sysuser
+            left join department on sysuser.department_id=department.id
+            )as p4 on table1.sysUser_id=p4.id
+            <where>
+                sysEquipment_id is not null
+                <!--<if test="paramEntity.deptid!=null">AND s.department_id = #{paramEntity.deptid}-->
+                <!--</if>-->
+                <if test="paramEntity.serNum!=null">AND ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryType!=null">and table1.dictionary_id like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+                </if>
+                <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.equipmentNo!=null">and equipmentNo like concat(concat('%',#{paramEntity.equipmentNo}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.usename!=null">AND name like concat(concat('%',#{paramEntity.usename}),'%')
+                </if>
+                <if test="paramEntity.capuseid!=null">AND sysEquipment_id = #{paramEntity.capuseid}
+                </if>
+            </where>
+        </if>
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        <if test="paramEntity.searchUser==null">
+            SELECT
+            count(1)
+            FROM (
+            SELECT count(*)
+            from
+            (select ProductInCap.*,sysequipment.equipmentNo from ProductInCap
+            left join sysequipment on ProductInCap.sysEquipment_id=sysequipment.id)as table0
+            left join
+            (select p3.*,
+            dictionary.`value`,
+            location.locInfo,
+            sysuser.name,
+            application.`name`as application_name
+            from
+            (select * from
+            (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id
+            from product where product_id  is null or  product_id not in
+            (SELECT id
+            FROM
+            product where product.product_id is null
+            ))as p0
+            union all
+            (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+            p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+            p2.application_id as application_id
+            from
+            (select * from product where product_id is not null)as p1
+            inner join product as p2 on p1.product_id=p2.id))as p3
+            LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+            LEFT JOIN location on p3.location_id=location.id
+            LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+            LEFT JOIN application on p3.application_id=application.id
+            )as table1
+            on table0.product_id=table1.id
+            left join
+            (select sysuser.id,department.id as dept_id,department.dep_name FROM sysuser
+            left join department on sysuser.department_id=department.id
+            )as p4 on table1.sysUser_id=p4.id
+            <where>
+                sysEquipment_id is not null
+                <!--<if test="paramEntity.deptid!=null">AND s.department_id = #{paramEntity.deptid}-->
+                <!--</if>-->
+                <if test="paramEntity.serNum!=null">AND ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryType!=null">and table1.dictionary_id like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+                </if>
+                <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.equipmentNo!=null">and equipmentNo like concat(concat('%',#{paramEntity.equipmentNo}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.usename!=null">AND name like concat(concat('%',#{paramEntity.usename}),'%')
+                </if>
+                <if test="paramEntity.capuseid!=null">AND sysEquipment_id= #{paramEntity.capuseid}
+                </if>
+            </where>
+            GROUP BY sysEquipment_id
+            )t
+        </if>
+        <if test="paramEntity.searchUser!=null">
+            SELECT
+            count(1)
+            from
+            (select ProductInCap.*,sysequipment.equipmentNo from ProductInCap
+            left join sysequipment on ProductInCap.sysEquipment_id=sysequipment.id)as table0
+            left join
+            (select p3.*,
+            dictionary.`value`,
+            location.locInfo,
+            sysuser.name,
+            application.`name`as application_name
+            from
+            (select * from
+            (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id
+            from product where product_id  is null or  product_id not in
+            (SELECT id
+            FROM
+            product where product.product_id is null
+            ))as p0
+            union all
+            (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+            p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+            p2.application_id as application_id
+            from
+            (select * from product where product_id is not null)as p1
+            inner join product as p2 on p1.product_id=p2.id))as p3
+            LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+            LEFT JOIN location on p3.location_id=location.id
+            LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+            LEFT JOIN application on p3.application_id=application.id
+            )as table1
+            on table0.product_id=table1.id
+            left join
+            (select sysuser.id,department.id as dept_id,department.dep_name FROM sysuser
+            left join department on sysuser.department_id=department.id
+            )as p4 on table1.sysUser_id=p4.id
+            <where>
+                sysEquipment_id is not null
+                <!--<if test="paramEntity.deptid!=null">AND s.department_id = #{paramEntity.deptid}-->
+                <!--</if>-->
+                <if test="paramEntity.serNum!=null">AND ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+                </if>
+                <if test="paramEntity.dictionaryType!=null">and table1.dictionary_id like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+                </if>
+                <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+                </if>
+                <if test="paramEntity.equipmentNo!=null">and equipmentNo like concat(concat('%',#{paramEntity.equipmentNo}),'%')
+                </if>
+                <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+                </if>
+                <if test="paramEntity.usename!=null">AND name like concat(concat('%',#{paramEntity.usename}),'%')
+                </if>
+                <if test="paramEntity.capuseid!=null">AND sysEquipment_id = #{paramEntity.capuseid}
+                </if>
+            </where>
+        </if>
+    </select>
+</mapper>

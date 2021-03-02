@@ -1,0 +1,21 @@
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/target
+/.idea
+*.iml
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/target
+/.idea
+src/main/webapp/js/cms.js___jb_old___
+log/
+src/main/webapp/Ace Admin v1.2/
+/log
+/src/main/resources/generatorConfig.xml

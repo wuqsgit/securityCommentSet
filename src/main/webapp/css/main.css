@@ -1,0 +1,164 @@
+.user-info {
+    max-width: 100px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: top;
+    line-height: 15px;
+    position: relative;
+    top: 15px;
+}
+
+/*左侧菜单背景*/
+.no-skin .sidebar {
+    background-color: #47a0db;
+    border-style: solid;
+    border-color: #CCC;
+    border-width: 0 1px 0 0;
+}
+/*左侧菜单项边框*/
+.no-skin .nav-list > li {
+    border-color: #47A0DB;
+    background-color: #47a0db;
+}
+/*左侧菜单项内容因为已经设置过底色所有这里直接给透明*/
+.no-skin .nav-list > li > a {
+    background-color:transparent;
+    color: white;
+}
+/*左侧一级菜单选中展开后样式*/
+.no-skin .nav-list .open > a, .no-skin .nav-list .open > a:hover, .no-skin .nav-list .open > a:focus {
+    background-color: #2d86c1;
+}
+.no-skin .nav-list > li > a:focus {
+    background-color: #2d86c1;
+    color: white;
+}
+
+.no-skin .nav-list > li.open > a {
+    background-color:  #2d86c1;
+    color: white;
+}
+/*左侧一级菜单鼠标滑过样式*/
+.no-skin .nav-list > li>a:hover {
+    background-color: #2d86c1;
+    color: white;
+}
+/*左侧二级菜单选中展开鼠标滑过二级菜单*/
+.no-skin .nav-list > li .submenu > li > a:hover {
+    background-color:#434766;
+    color: white;
+}
+/*左侧二级菜单收起后标题*/
+.no-skin .sidebar.menu-min .nav-list > li > a > .menu-text {
+    background-color: #2d86c1;
+    -webkit-box-shadow: 2px 1px 2px 0 rgba(0,0,0,0.1);
+    box-shadow: 2px 1px 2px 0 rgba(0,0,0,0.1);
+    border-color: #CCC;
+}
+/*左侧二级菜单选中展开边框为0*/
+.nav-list > li > .submenu {
+    border-top: 0px solid;
+
+}
+
+.no-skin .nav-list > li .submenu > li > a {
+    border-top-color: #E4E4E4;
+    background-color:#47a0db;
+    color: white;
+    border-top: 0px solid;
+}
+/*左侧菜单底部折叠块标题*/
+.no-skin .nav-list > li .submenu > li.active > a > .menu-icon {
+    color: white;
+    background-color:#47a0db;
+}
+
+/*左侧菜单底部折叠块样式*/
+.no-skin .sidebar-toggle {
+    background-color:transparent;
+    border-color: #E0E0E0;
+}
+
+
+
+/*左侧菜单底部折叠块去掉底部边线设置参数为 border-width: 0 0 0px;*/
+.sidebar .sidebar-toggle {
+    border-style: solid;
+    border-width: 0 0 0px;
+    text-align: center;
+    padding: 3px 0;
+    position: relative;
+}
+/*标签页背景*/
+.nav-tabs {
+    border-color: #C5D0DC;
+    margin-bottom: 0 !important;
+    margin-left: 0;
+    position: relative;
+    top: 1px;
+    background-color: #f7f8fc;
+}
+
+/*标签页nav-tabs圆角矩形*/
+.nav-tabs>li>a, .nav-tabs>li>a:focus {
+    border-radius: 5px 5px 0px 0px !important;
+    background-color: #f7f8fc;
+    color: #999;
+    margin-right: -1px;
+    line-height: 16px;
+    position: relative;
+    z-index: 11;
+    border-color: #c5d0dc;
+}
+
+
+/*主页面背景*/
+.main-content {
+    margin-left: 0;
+    min-height:90%;
+    padding: 0;
+    background-color:#f7f8fc;
+}
+.page-content {
+    background-color:#f7f8fc;
+    position: relative;
+    margin: 0;
+    padding: 8px 20px 10px;
+}
+
+.tab-content {
+    border: 1px solid #C5D0DC;
+    padding: 10px 12px;
+    position: relative;
+}
+.ace-nav {
+    height:auto;
+}
+
+/*底部工具栏样式*/
+.footer .footer-inner .footer-content {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
+    padding: 0px;
+    line-height: 36px;
+    border-top: 3px double #f7f8fc;
+}
+.tabbable {
+    background-color: #f7f8fc;
+}
+.footer{
+    background-color: #f7f8fc;
+}
+.footer-inner{
+    background-color: #f7f8fc;
+}
+/*吐司图标样式*/
+#toast-container > .toast-success {
+     background-image: url("") !important;
+/* background-color: #dff0d8;*/
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+ ">
+
+
+     <!--映射器(可选配) BeanNameUrlHandlerMapping表示将bean标签的name属性当作URL请求-->
+      <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+
+     <!--适配器(可选配) -->
+      <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+
+     <!--视图解析器(可选配) 表示通过ModelAndView对象中封装的视图名找到真正的页面-->
+     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+
+</beans>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.AccesscontrolselectMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.AccesscontrolSelect">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionaryType" jdbcType="VARCHAR" property="dictionaryType"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="name" jdbcType="VARCHAR" property="sysUserName"/>
+        <result column="equipment" jdbcType="VARCHAR" property="equipment"/>
+        <result column="access_time" jdbcType="VARCHAR" property="accessTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, sysEquipment_id, access_time
+    </sql>
+    <!--查询所有数据 -->
+    <select id="selectAll"  resultMap="BaseResultMap">
+     SELECT ac.id as id,p.rfid_code as rfid_code,p.pro_code as pro_code,p.ser_num as ser_num,d1.value as dictionaryType,p.model as model,su.name as name,CONCAT(d2.value,s.equipmentNo) as equipment,ac.access_time as access_time
+     FROM  accesscontrol as ac
+     LEFT OUTER JOIN product as p on ac.product_id = p.id
+     LEFT OUTER JOIN sysequipment as s on ac.sysEquipment_id = s.id
+     LEFT OUTER JOIN dictionary as d1 ON p.dictionary_id = d1.id
+     LEFT OUTER JOIN dictionary as d2 ON s.dictionaryID = d2.id
+     LEFT OUTER JOIN sysuser as su ON p.sysUser_id = su.id
+    </select>
+
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMap">
+
+        select
+        accesscontrol.id,rfid_code, pro_code,ser_num,dictionaryValue as 'dictionaryType',model ,sysuserName as 'name',access_time as access_time,
+        CONCAT(dictionary.value,s.equipmentNo)as equipment
+
+        from accesscontrol
+        left join
+        (select p3.*,
+        dictionary.value as 'dictionaryValue',
+        location.locInfo,
+        sysuser.name as 'sysuserName',
+        application.name as 'applicationName',
+        left(p3.pro_code,7) as 'pro_b',
+        right(p3.pro_code,4) as 'pro_e'
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,'0' as sort,
+        product_id,application_id
+        from product where product_id is null)as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,'2'as sort,p1.product_id,
+        p2.application_id
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3
+        LEFT JOIN dictionary on p3.dictionary_id=dictionary.id
+        LEFT JOIN location on p3.location_id=location.id
+        LEFT JOIN sysuser on p3.sysUser_id=sysuser.id
+        LEFT JOIN application on p3.application_id=application.id
+        )as table0
+        on accesscontrol.product_id=table0.id
+        left join  sysequipment as s on accesscontrol.sysEquipment_id = s.id
+        LEFT JOIN dictionary on s.dictionaryID=dictionary.id
+        <where>
+
+            <if test="paramEntity.serNum!=null">AND ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <!--<if test="paramEntity.deptid!=null">AND department_id = #{paramEntity.deptid}-->
+            <!--</if>-->
+            <if test="paramEntity.dictionaryType!=null">dictionaryValue like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+            </if>
+            <if test="paramEntity.model!=null">and model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.rfidCode!=null">and rfid_code like concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                left(access_time,10)>=#{paramEntity.startTime}
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                #{paramEntity.endTime}>=left(ac.access_time,10)
+            </if>
+        </where>
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM  accesscontrol as ac
+        LEFT OUTER JOIN product as p on ac.product_id = p.id
+        LEFT OUTER JOIN sysequipment as s on ac.sysEquipment_id = s.id
+        LEFT OUTER JOIN dictionary as d1 ON p.dictionary_id = d1.id
+        LEFT OUTER JOIN dictionary as d2 ON s.dictionaryID = d2.id
+        LEFT OUTER JOIN sysuser as su ON s.sysUserID = su.id
+        <where>
+            ac.id is not null
+            <if test="paramEntity.serNum!=null">AND p.ser_num like concat(concat('%',#{paramEntity.serNum}),'%')
+            </if>
+            <if test="paramEntity.dictionaryType!=null">and d1.code like concat(concat('%',#{paramEntity.dictionaryType}),'%')
+            </if>
+            <if test="paramEntity.deptid!=null">AND su.department_id = #{paramEntity.deptid}
+            </if>
+            <if test="paramEntity.model!=null">and p.model like concat(concat('%',#{paramEntity.model}),'%')
+            </if>
+            <if test="paramEntity.proCode!=null">and p.pro_code like concat(concat('%',#{paramEntity.proCode}),'%')
+            </if>
+            <if test="paramEntity.rfidCode!=null">and p.rfid_code like concat(concat('%',#{paramEntity.rfidCode}),'%')
+            </if>
+            <if test="paramEntity.startTime!=null and paramEntity.startTime!=''">and
+                left(ac.access_time,10)>=#{paramEntity.startTime}
+            </if>
+            <if test="paramEntity.endTime!=null and paramEntity.endTime!=''">and
+                #{paramEntity.endTime}>=left(ac.access_time,10)
+            </if>
+        </where>
+    </select>
+</mapper>

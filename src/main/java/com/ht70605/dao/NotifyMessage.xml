@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.NotifyMessageMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.NotifyMessage">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="fieldId" jdbcType="VARCHAR" property="fieldId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="isRead" jdbcType="VARCHAR" property="isRead"/>
+        <result column="createDate" jdbcType="VARCHAR" property="createDate"/>
+        <result column="readTime" jdbcType="VARCHAR" property="readTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, message, fieldId, userId, isRead, createDate, readTime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from NotifyMessage
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NotifyMessage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.NotifyMessage">
+    insert into NotifyMessage (id, message, fieldId, 
+      userId, isRead, createDate, readTime)
+    values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{fieldId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{isRead,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{readTime,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.NotifyMessage">
+        insert into NotifyMessage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="fieldId != null">
+                fieldId,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="isRead != null">
+                isRead,
+            </if>
+            <if test="createDate != null">
+                createDate,
+            </if>
+            <if test="readTime != null">
+                readTime,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldId != null">
+                #{fieldId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="isRead != null">
+                #{isRead,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="readTime != null">
+                #{readTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.NotifyMessage">
+        update NotifyMessage
+        <set>
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldId != null">
+                fieldId = #{fieldId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                userId = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="isRead != null">
+                isRead = #{isRead,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                createDate = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="readTime != null">
+                readTime = #{readTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.NotifyMessage">
+    update NotifyMessage
+    set message = #{message,jdbcType=VARCHAR},
+      fieldId = #{fieldId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=VARCHAR},
+      isRead = #{isRead,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=VARCHAR},
+      readTime = #{readTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

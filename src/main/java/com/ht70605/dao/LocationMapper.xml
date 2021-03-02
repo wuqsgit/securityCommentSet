@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.LocationMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Location">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="locinfo" jdbcType="VARCHAR" property="locinfo"/>
+        <result column="departmentID" jdbcType="VARCHAR" property="departmentid"/>
+        <result column="creat_time" jdbcType="VARCHAR" property="creatTime"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="is_userable" jdbcType="VARCHAR" property="isUserable"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, locInfo, departmentID, creat_time, info,is_userable
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from location
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from location
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Location">
+        insert into location (id, locInfo, departmentID,
+        creat_time, info,is_userable)
+        values (#{id,jdbcType=VARCHAR}, #{locinfo,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR},
+        #{creatTime,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR},#{is_userable,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Location">
+        insert into location
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="locinfo != null">
+                locInfo,
+            </if>
+            <if test="departmentid != null">
+                departmentID,
+            </if>
+            <if test="creatTime != null">
+                creat_time,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="locinfo != null">
+                #{locinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentid != null">
+                #{departmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Location">
+        update location
+        <set>
+            <if test="locinfo != null">
+                locInfo = #{locinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentid != null">
+                departmentID = #{departmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                creat_time = #{creatTime,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="isUserable != null">
+                is_userable = #{isUserable,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Location">
+        update location
+        set locInfo = #{locinfo,jdbcType=VARCHAR},
+        departmentID = #{departmentid,jdbcType=VARCHAR},
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+        info = #{info,jdbcType=VARCHAR},
+        is_userable = #{isUserable,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from location
+    </select>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.LocationSelect" extends="BaseResultMap">
+        <result column="dep_name" jdbcType="VARCHAR" property="departmentName"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        s.id,
+        s.locInfo,
+        s.departmentID,
+        s.creat_time,
+        s.info,
+        d.dep_name,
+        s.is_userable
+        FROM location s LEFT JOIN department d ON s.departmentID = d.id
+        <where>
+            <if test="paramEntity.id!=null">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.locinfo!=null">and s.locInfo like concat(concat('%',#{paramEntity.locinfo}),'%')
+            </if>
+            <if test="paramEntity.creatTime!=null">and s.creat_time like concat(concat('%',#{paramEntity.creatTime}),'%')
+            </if>
+            <if test="paramEntity.info!=null">and s.info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.departmentid!=null">and d.id =#{paramEntity.departmentid}
+            </if>
+        </where>
+        ORDER BY
+        create_time
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM location s LEFT JOIN department d ON s.departmentID = d.id
+        <where>
+            <if test="paramEntity.id!=null">AND s.id like concat(concat('%',#{paramEntity.id}),'%')
+            </if>
+            <if test="paramEntity.locinfo!=null">and s.locInfo like concat(concat('%',#{paramEntity.locinfo}),'%')
+            </if>
+            <if test="paramEntity.creatTime!=null">and s.creat_time like concat(concat('%',#{paramEntity.creatTime}),'%')
+            </if>
+            <if test="paramEntity.info!=null">and s.info like concat(concat('%',#{paramEntity.info}),'%')
+            </if>
+            <if test="paramEntity.departmentid!=null">and d.id =#{paramEntity.departmentid}
+            </if>
+        </where>
+    </select>
+
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from location where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+    <!--新建操作查询是否重复 -->
+    <select id="selectByLocationAndUnit" parameterType="com.ht70605.entity.Location" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM location s
+        <where>
+            s.locInfo = #{locinfo}
+        </where>
+    </select>
+
+    <select id="selectLocationByDept" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from location
+        where departmentID = #{deptId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLocationBySysUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        l.*
+        from sysuser s LEFT JOIN department d ON s.department_id=d.id
+        LEFT JOIN  location l ON d.id=l.departmentID
+        where s.id = #{s,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

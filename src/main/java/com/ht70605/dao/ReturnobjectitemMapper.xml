@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.ReturnobjectitemMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Returnobjectitem">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="returnObject_id" jdbcType="VARCHAR" property="returnobjectId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, returnObject_id, product_id, result, create_time, update_time, status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from returnobjectitem
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from returnobjectitem
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Returnobjectitem">
+        insert into returnobjectitem (id, returnObject_id, product_id,
+        result, create_time, update_time,
+        status)
+        values (#{id,jdbcType=VARCHAR}, #{returnobjectId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+        #{result,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Returnobjectitem">
+        insert into returnobjectitem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="returnobjectId != null">
+                returnObject_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="returnobjectId != null">
+                #{returnobjectId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Returnobjectitem">
+        update returnobjectitem
+        <set>
+            <if test="returnobjectId != null">
+                returnObject_id = #{returnobjectId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Returnobjectitem">
+        update returnobjectitem
+        set returnObject_id = #{returnobjectId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=VARCHAR},
+        result = #{result,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteIdList">
+        delete from returnobjectitem where returnObject_id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <delete id="deleteList">
+        delete from returnobjectitem where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <delete id="deleteItemByReturnobjIdAndProductId">
+        delete from returnobjectitem
+        <where>
+            <if test="proId !=null">AND product_id = #{proId,jdbcType=VARCHAR}
+            </if>
+            <if test="returnobjId !=null">AND returnObject_id = #{returnobjId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.ReturnobjectitemSelect" extends="BaseResultMap">
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionary_value" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="application_name" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locInfo"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        p.pro_code,
+        p.ser_num,
+        dic.value AS dictionary_value,
+        p.rfid_code,
+        a.name    AS application_name,
+        d.dep_name AS department_name,
+        l.locInfo,
+        r.result
+        FROM returnobjectitem r LEFT JOIN product p ON r.product_id = p.id
+        LEFT JOIN sysuser s ON p.sysUser_id = s.id
+        LEFT JOIN application a ON p.application_id = a.id
+        LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN location l ON p.location_id = l.id
+        LEFT JOIN dictionary dic ON dic.id = p.dictionary_id
+        <where>
+            <if test="paramEntity.inventoryId!=null">AND r.inventory_id like concat(concat('%',#{paramEntity.inventoryId}),'%')
+            </if>
+            <if test="paramEntity.departmentId!=null">AND s.department_id like concat(concat('%',#{paramEntity.departmentId}),'%')
+            </if>
+            <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id like concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id like concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.localId!=null">AND p.location_id like concat(concat('%',#{paramEntity.localId}),'%')
+            </if>
+        </where>
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectReturnobjectitemByReturnobjId" parameterType="java.lang.String" resultMap="BaseResultMapSelect">
+        SELECT
+        i.*
+        FROM returnobjectitem i
+        <where>
+            <if test="inid !=null">AND i.returnObject_id = #{inid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT
+        r.id
+        FROM returnobjectitem r LEFT JOIN product p ON r.product_id = p.id
+        LEFT JOIN sysuser s ON p.sysUser_id = s.id
+        LEFT JOIN application a ON p.application_id = a.id
+        LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN location l ON p.location_id = l.id
+        LEFT JOIN dictionary dic ON dic.id = p.dictionary_id
+        <where>
+            <if test="paramEntity.inventoryId!=null">AND r.inventory_id like concat(concat('%',#{paramEntity.inventoryId}),'%')
+            </if>
+            <if test="paramEntity.departmentId!=null">AND s.department_id like concat(concat('%',#{paramEntity.departmentId}),'%')
+            </if>
+            <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id like concat(concat('%',#{paramEntity.dictionaryId}),'%')
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id like concat(concat('%',#{paramEntity.applicationId}),'%')
+            </if>
+            <if test="paramEntity.localId!=null">AND p.location_id like concat(concat('%',#{paramEntity.localId}),'%')
+            </if>
+        </where>
+        ) AS t
+    </select>
+</mapper>

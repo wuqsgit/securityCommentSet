@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.InventoryitemMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Inventoryitem">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="inventory_id" jdbcType="VARCHAR" property="inventoryId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, inventory_id, product_id, result
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from inventoryitem
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from inventoryitem
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Inventoryitem">
+        insert into inventoryitem (id, inventory_id, product_id,
+        result)
+        values (#{id,jdbcType=VARCHAR}, #{inventoryId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+        #{result,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Inventoryitem">
+        insert into inventoryitem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="inventoryId != null">
+                inventory_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="inventoryId != null">
+                #{inventoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Inventoryitem">
+        update inventoryitem
+        <set>
+            <if test="inventoryId != null">
+                inventory_id = #{inventoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Inventoryitem">
+        update inventoryitem
+        set inventory_id = #{inventoryId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=VARCHAR},
+        result = #{result,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from inventoryitem where inventory_id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.InventoryitemSelect" extends="BaseResultMap">
+        <result column="pro_code" jdbcType="VARCHAR" property="proCode"/>
+        <result column="ser_num" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionary_value" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="rfid_code" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="application_name" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locInfo"/>
+
+        <result column="dictionaryId" jdbcType="VARCHAR" property="dictionaryId"/>
+        <result column="localId" jdbcType="VARCHAR" property="localId"/>
+        <result column="applicationId" jdbcType="VARCHAR" property="applicationId"/>
+        <result column="serNum" jdbcType="VARCHAR" property="serNum"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+    </resultMap>
+    <!--模糊查询 -->
+    <select id="selectInventoryitemByInvenId" parameterType="java.lang.String" resultMap="BaseResultMapSelect">
+        SELECT
+        i.*,
+        p.pro_code,
+        p.rfid_code,
+        p.dictionary_id AS dictionaryId,
+        p.location_id AS locationId,
+        p.application_id AS applicationId,
+        p.ser_num AS serNum,
+        p.model AS model
+        FROM inventoryitem i
+        LEFT JOIN product p ON  p.id = i.product_id
+        <where>
+            <if test="inid !=null">AND i.inventory_id = #{inid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectInventoryitemByInvenIdUser" parameterType="java.lang.String" resultMap="BaseResultMapSelect">
+        SELECT
+        i.*,
+        p.pro_code,
+        p.rfid_code,
+        p.dictionary_id AS dictionaryId,
+        p.location_id AS locationId,
+        p.application_id AS applicationId,
+        p.ser_num AS serNum,
+        p.model AS model
+        FROM inventoryitem i
+        LEFT JOIN product p ON  p.id = i.product_id
+        <where>
+            <if test="inid !=null">AND i.inventory_id = #{inid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteIdList">
+        delete from inventoryitem where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <delete id="deleteItemByInventIdAndProductId">
+        delete from inventoryitem
+        <where>
+            <if test="proId !=null">AND product_id = #{proId,jdbcType=VARCHAR}
+            </if>
+            <if test="inventId !=null">AND inventory_id = #{inventId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        i.id,
+        p.pro_code,
+        p.ser_num,
+        dic.value AS dictionary_value,
+        p.rfid_code,
+        i.level,
+        a.name    AS application_name,
+        d.dep_name AS department_name,
+        l.locInfo,
+        i.result
+        FROM inventoryitem i LEFT JOIN product p ON i.product_id = p.product_id
+        LEFT JOIN sysuser s ON p.sysUser_id = s.id
+        LEFT JOIN application a ON p.application_id = a.id
+        LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN location l ON p.location_id = l.id
+        LEFT JOIN dictionary dic ON dic.id = p.dictionary_id
+        <where>
+            <if test="paramEntity.inventoryId!=null">AND i.inventory_id = #{paramEntity.inventoryId}
+            </if>
+            <if test="paramEntity.departmentId!=null">AND s.department_id = #{paramEntity.departmentId}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.localId!=null">AND p.location_id = #{paramEntity.localId}
+            </if>
+        </where>
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT
+        i.id
+        FROM inventoryitem i LEFT JOIN product p ON i.product_id = p.id
+        LEFT JOIN sysuser s ON p.sysUser_id = s.id
+        LEFT JOIN application a ON p.application_id = a.id
+        LEFT JOIN department d ON s.department_id = d.id
+        LEFT JOIN location l ON p.location_id = l.id
+        LEFT JOIN dictionary dic ON dic.id = p.dictionary_id
+        <where>
+            <if test="paramEntity.inventoryId!=null">AND i.inventory_id = #{paramEntity.inventoryId}
+            </if>
+            <if test="paramEntity.departmentId!=null">AND s.department_id = #{paramEntity.departmentId}
+            </if>
+            <if test="paramEntity.dictionaryId!=null">AND p.dictionary_id = #{paramEntity.dictionaryId}
+            </if>
+            <if test="paramEntity.applicationId!=null">AND p.application_id = #{paramEntity.applicationId}
+            </if>
+            <if test="paramEntity.localId!=null">AND p.location_id = #{paramEntity.localId}
+            </if>
+        </where>
+        ) AS t
+    </select>
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.NotifyFieldMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.NotifyField">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="fieldName" jdbcType="VARCHAR" property="fieldName"/>
+        <result column="business" jdbcType="VARCHAR" property="business"/>
+        <result column="createDate" jdbcType="VARCHAR" property="createDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, fieldName, business, createDate
+  </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from NotifyField
+    </select>
+
+    <select id="getFieldByBusiness" parameterType="String" resultMap="BaseResultMap">
+        select * from NotifyField t where t.business = #{business,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from NotifyField
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NotifyField
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.NotifyField">
+    insert into NotifyField (id, fieldName, business, 
+      createDate)
+    values (#{id,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, #{business,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.NotifyField">
+        insert into NotifyField
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fieldName != null">
+                fieldName,
+            </if>
+            <if test="business != null">
+                business,
+            </if>
+            <if test="createDate != null">
+                createDate,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldName != null">
+                #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="business != null">
+                #{business,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.NotifyField">
+        update NotifyField
+        <set>
+            <if test="fieldName != null">
+                fieldName = #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="business != null">
+                business = #{business,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                createDate = #{createDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.NotifyField">
+    update NotifyField
+    set fieldName = #{fieldName,jdbcType=VARCHAR},
+      business = #{business,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    
+</mapper>

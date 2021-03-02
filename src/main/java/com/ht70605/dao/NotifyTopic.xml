@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.NotifyTopicMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.NotifyTopic">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="fieldId" jdbcType="VARCHAR" property="fieldId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, userName, fieldId, userId
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notifytopic
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from notifytopic
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.NotifyTopic">
+    insert into notifytopic (id, userName, fieldId, 
+      userId)
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{fieldId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+
+    <select id="getNotifyTopicByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notifytopic
+        <where>
+        <if test="uid != null and uid != ''">
+            userId = #{uid,jdbcType=VARCHAR}
+    </if>
+        </where>
+    </select>
+
+    <select id="getNotifyTopicByFieldId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notifytopic
+        where
+        <if test="fieldId != null and fieldId != ''">
+            fieldId = #{fieldId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.ht70605.entity.NotifyTopic">
+        insert into notifytopic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                userName,
+            </if>
+            <if test="fieldId != null">
+                fieldId,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldId != null">
+                #{fieldId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.NotifyTopic">
+        update notifytopic
+        <set>
+            <if test="userName != null">
+                userName = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldId != null">
+                fieldId = #{fieldId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                userId = #{userId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.NotifyTopic">
+    update notifytopic
+    set userName = #{userName,jdbcType=VARCHAR},
+      fieldId = #{fieldId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    
+</mapper>

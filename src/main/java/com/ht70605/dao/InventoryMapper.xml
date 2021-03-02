@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.InventoryMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Inventory">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="dictionaryID" jdbcType="VARCHAR" property="dictionaryid"/>
+        <result column="applicationID" jdbcType="VARCHAR" property="applicationid"/>
+        <result column="sysUserID" jdbcType="VARCHAR" property="sysuserid"/>
+        <result column="creatTime" jdbcType="VARCHAR" property="creattime"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="retTime" jdbcType="VARCHAR" property="rettime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="performer" jdbcType="VARCHAR" property="performer"/>
+        <result column="location_id" jdbcType="VARCHAR" property="locationid"/>
+        <result column="departmentID" jdbcType="VARCHAR" property="departmentid"/>
+        <result column="departmentID" jdbcType="VARCHAR" property="departmentid"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dictionaryID, applicationID, sysUserID, creatTime, result, retTime, status, performer,location_id,departmentID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from inventory
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from inventory
+    where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from inventory where id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.ht70605.entity.Inventory">
+    insert into inventory (id, dictionaryID, applicationID, 
+      sysUserID, creatTime, result, 
+      retTime, status, performer,location_id,departmentID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{dictionaryid,jdbcType=VARCHAR}, #{applicationid,jdbcType=VARCHAR}, 
+      #{sysuserid,jdbcType=VARCHAR}, #{creattime,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{rettime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{performer,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR},#{departmentid,jdbcType=VARCHAR}
+      )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Inventory">
+        insert into inventory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dictionaryid != null">
+                dictionaryID,
+            </if>
+            <if test="applicationid != null">
+                applicationID,
+            </if>
+            <if test="sysuserid != null">
+                sysUserID,
+            </if>
+            <if test="creattime != null">
+                creatTime,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="rettime != null">
+                retTime,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="performer != null">
+                performer,
+            </if>
+            <if test="locationid != null">
+                location_id,
+            </if>
+            <if test="departmentid != null">
+                departmentID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="dictionaryid != null">
+                #{dictionaryid,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationid != null">
+                #{applicationid,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserid != null">
+                #{sysuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                #{creattime,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="rettime != null">
+                #{rettime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="performer != null">
+                #{performer,jdbcType=VARCHAR},
+            </if>
+            <if test="locationid != null">
+                 #{locationid,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentid != null">
+                #{departmentid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Inventory">
+        update inventory
+        <set>
+            <if test="dictionaryid != null">
+                dictionaryID = #{dictionaryid,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationid != null">
+                applicationID = #{applicationid,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserid != null">
+                sysUserID = #{sysuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                creatTime = #{creattime,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="rettime != null">
+                retTime = #{rettime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="performer != null">
+                performer = #{performer,jdbcType=VARCHAR},
+            </if>
+            <if test="locationid != null">
+                location_id = #{locationid,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentid != null">
+                departmentID = #{departmentid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Inventory">
+    update inventory
+    set dictionaryID = #{dictionaryid,jdbcType=VARCHAR},
+      applicationID = #{applicationid,jdbcType=VARCHAR},
+      sysUserID = #{sysuserid,jdbcType=VARCHAR},
+      creatTime = #{creattime,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      retTime = #{rettime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      performer = #{performer,jdbcType=VARCHAR},
+      location_id = #{locationid,jdbcType=VARCHAR},
+      departmentID= #{departmentid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPKey" parameterType="com.ht70605.entity.Inventory">
+        update inventory
+        set
+        result = #{result,jdbcType=VARCHAR},
+        retTime = #{rettime,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        performer = #{performer,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <resultMap id="BaseResultMapSelect" type="com.ht70605.entity.InventorySelect" extends="BaseResultMap">
+        <result column="dep_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="application_name" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="value" jdbcType="VARCHAR" property="dictionaryValue"/>
+        <result column="sysuser_name" jdbcType="VARCHAR" property="sysuserName"/>
+        <result column="performer_name" jdbcType="VARCHAR" property="performerName"/>
+        <result column="locInfo" jdbcType="VARCHAR" property="locInfo"/>
+        <result column="proCode" jdbcType="VARCHAR" property="proCode"/>
+        <result column="serNum" jdbcType="VARCHAR" property="serNum"/>
+        <result column="dictionaryType" jdbcType="VARCHAR" property="dictionaryType"/>
+        <result column="rfidCode" jdbcType="VARCHAR" property="rfidCode"/>
+        <result column="productionId" jdbcType="VARCHAR" property="productionId"/>
+        <result column="itemId" jdbcType="VARCHAR" property="itemId" />
+        <result column="model" jdbcType="VARCHAR" property="model" />
+        <result column="proId" jdbcType="VARCHAR" property="proId" />
+        <result column="depId" jdbcType="VARCHAR" property="depId" />
+        <result column="completeNum" jdbcType="VARCHAR" property="completeNum"/>
+        <result column="noncompleteNum" jdbcType="VARCHAR" property="noncompleteNum"/>
+        <result column="month" jdbcType="VARCHAR" property="month"/>
+    </resultMap>
+
+    <!-- 按照用户Id查询未下发的信息-->
+    <select id="selectInventoryByUserId"  resultMap="BaseResultMap">
+        SELECT
+        i.*
+        FROM inventory i
+        <where>
+            i.status = '1'
+            <if test="userId!= null and userId!=''">
+                AND i.sysUserID like concat(concat('%',#{userId}),'%')
+            </if>
+        </where>
+
+    </select>
+
+
+    <!--模糊查询 首次查询-->
+    <select id="selectPageListSearch" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        i.id,
+        i.applicationID,
+        i.dictionaryID,
+        i.location_id,
+        i.departmentID AS depId,
+        i.creatTime,
+        i.retTime,
+        i.status,
+        app.name AS application_name,
+        dic.value,
+        dic.type AS dictionaryType,
+        sys.name AS sysuser_name,
+        sysu.name AS performer_name,
+        i.result,
+        dep.dep_name,
+        loc.locInfo
+        FROM inventory i
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN department dep ON i.departmentID = dep.id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        LEFT JOIN location loc ON i.location_id = loc.id
+        <where>
+            <if test="paramEntity.status!= null and paramEntity.status!=''">AND i.status like concat(concat('%',#{paramEntity.status}),'%')
+            </if>
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                left(i.creatTime, 10)>=#{paramEntity.creattime}
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                #{paramEntity.rettime}>=left(i.creatTime, 10)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                left(i.retTime, 10)>=#{paramEntity.retStarttime}
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                #{paramEntity.retEndtime}>=left(i.retTime, 10)
+            </if>
+            <if test="paramEntity.deptId!=null and paramEntity.deptId!=''">
+                AND i.departmentID =#{paramEntity.deptId}
+            </if>
+        </where>
+        ORDER BY i.creatTime DESC
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectPageCountListSearch" parameterType="page" resultType="Integer">
+        SELECT
+        count(1)
+        FROM inventory i
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN department dep ON i.departmentID = dep.id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        LEFT JOIN location loc ON i.location_id = loc.id
+        <where>
+            <if test="paramEntity.status!= null and paramEntity.status!=''">AND i.status like concat(concat('%',#{paramEntity.status}),'%')
+            </if>
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                left(i.creatTime, 10)>=#{paramEntity.creattime}
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                #{paramEntity.rettime}>=left(i.creatTime, 10)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                left(i.retTime, 10)>=#{paramEntity.retStarttime}
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                #{paramEntity.retEndtime}>=left(i.retTime, 10)
+            </if>
+            <if test="paramEntity.deptId!=null and paramEntity.deptId!=''">
+                AND sys.department_id =#{paramEntity.deptId}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊查询 新建 编辑查询-->
+    <select id="insertPageListSearch" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        i.id,
+        app.name AS application_name,
+        dic.value,
+        dic.type AS dictionaryType,
+        sys.name AS sysuser_name,
+        sysu.name AS performer_name,
+        i.result,
+        dep.dep_name,
+        loc.locInfo
+        FROM inventory i
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN department dep ON i.departmentID = dep.id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        LEFT JOIN location loc ON i.location_id = loc.id
+
+        <where>
+            <if test="paramEntity.status!= null">AND i.status like concat(concat('%',#{paramEntity.status}),'%')
+            </if>
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                LEFT(i.creatTime, 10) >=#{paramEntity.creattime}
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                #{paramEntity.rettime}>=LEFT(i.creatTime, 10)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                LEFT(i.retTime, 10)>=#{paramEntity.retStarttime}
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                #{paramEntity.retEndtime}>=left(i.retTime, 10)
+            </if>
+        </where>
+        ORDER BY i.creatTime DESC
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <select id="selectjys" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        i.id,
+        iitem.id AS itemId,
+        dep.id AS depId,
+        dep.dep_name,
+        app.name AS application_name,
+        dic.value,
+        dic.type AS dictionaryType,
+        sys.name AS sysuser_name,
+        sysu.name AS performer_name,
+        i.applicationID,
+        i.dictionaryID,
+        i.location_id,
+        i.creatTime,
+        i.retTime,
+        i.performer,
+        i.status,
+        i.result,
+        pro.level,
+        pro.pro_code AS proCode,
+        pro.model,
+        pro.ser_num AS serNum,
+        pro.rfid_code AS rfidCode,
+        pro.id AS productionId,
+        pro.id AS proId,
+        loc.locInfo
+        FROM inventory i
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN department dep ON sys.id = dep.sysUser_id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        RIGHT JOIN inventoryitem iitem ON i.id = iitem.inventory_id
+        RIGHT JOIN
+        (SELECT *
+        from
+        (select * from
+        (select id,rfid_code,dictionary_id,location_id,create_time,info,model,pro_code,ser_num,sysUser_id,application_id,level
+
+        from product where product_id  is null or  product_id not in
+        (SELECT id
+        FROM
+        product where product.product_id is null
+        ))as p0
+        union all
+        (select p1.id,p1.rfid_code,p1.dictionary_id,p1.location_id,
+        p1.create_time,p1.info,p2.model,p2.pro_code,p2.ser_num,p2.sysUser_id,
+        p2.application_id as application_id,p1.level
+
+        from
+        (select * from product where product_id is not null)as p1
+        inner join product as p2 on p1.product_id=p2.id))as p3)pro ON pro.id = iitem.product_id
+        LEFT JOIN location loc ON i.location_id = loc.id
+        <where>
+            <if test="paramEntity.id!=null">AND i.id = #{paramEntity.id}
+            </if>
+            <!--<if test="paramEntity.deptid!=null">AND sys.department_id = #{paramEntity.deptid}-->
+            <!--</if>-->
+            <if test="paramEntity.status!= null">AND i.status = #{paramEntity.status}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.searchApplication!=null">AND i.applicationID = #{paramEntity.searchApplication}
+            </if>
+            <if test="paramEntity.searchLocation!=null">AND i.location_id = #{paramEntity.searchLocation}
+            </if>
+            <if test="paramEntity.searchDictionary!=null">AND i.dictionaryID = #{paramEntity.searchDictionary}
+            </if>
+
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                unix_timestamp(i.creatTime)>=unix_timestamp(#{paramEntity.creattime})
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                unix_timestamp(#{paramEntity.rettime})>=unix_timestamp(i.creatTime)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                unix_timestamp(i.retTime)>=unix_timestamp(#{paramEntity.retStarttime})
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                unix_timestamp(#{paramEntity.retEndtime})>=unix_timestamp(i.retTime)
+            </if>
+            <if test="paramEntity.isProducer == '1'">and
+                pro.product_id is not NULL
+            </if>
+
+            <if test="paramEntity.retTime!=null">AND MONTH(i.retTime) = #{paramEntity.retTime}
+            </if>
+            <if test="paramEntity.creatTime!=null">AND MONTH(i.creatTime) = #{paramEntity.creatTime}
+            </if>
+        </where>
+        <if test="paramEntity.searchUser==null">
+        GROUP BY i.id
+        </if>
+        <if test="paramEntity.status==2">
+        ORDER BY i.retTime DESC
+        </if>
+        <if test="paramEntity.status==1">
+            ORDER BY i.creatTime DESC
+        </if>
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT
+        DISTINCT(i.id),
+        iitem.id AS itemId,
+        dep.id AS depId,
+        dep.dep_name,
+        app.name AS application_name,
+        dic.value,
+        dic.type AS dictionaryType,
+        sys.name AS sysuser_name,
+        sysu.name AS performer_name,
+        i.applicationID,
+        i.dictionaryID,
+        i.location_id,
+        i.creatTime,
+        i.retTime,
+        i.performer,
+        i.status,
+        i.result,
+        pro.level,
+        pro.pro_code AS proCode,
+        pro.model,
+        pro.ser_num AS serNum,
+        pro.rfid_code AS rfidCode,
+        pro.product_id AS productionId,
+        pro.id AS proId,
+        loc.locInfo
+        FROM inventory i
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN department dep ON sys.id = dep.sysUser_id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        LEFT JOIN inventoryitem iitem ON i.id = iitem.inventory_id
+        LEFT JOIN product pro ON pro.id = iitem.product_id
+        LEFT JOIN location loc ON i.location_id = loc.id
+        <where>
+            <if test="paramEntity.id!=null">AND i.id = #{paramEntity.id}
+            </if>
+            <if test="paramEntity.status!= null">AND i.status = #{paramEntity.status}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.searchApplication!=null">AND i.applicationID = #{paramEntity.searchApplication}
+            </if>
+            <if test="paramEntity.searchLocation!=null">AND i.location_id = #{paramEntity.searchLocation}
+            </if>
+            <if test="paramEntity.searchDictionary!=null">AND i.dictionaryID = #{paramEntity.searchDictionary}
+            </if>
+
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                unix_timestamp(i.creatTime)>=unix_timestamp(#{paramEntity.creattime})
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                unix_timestamp(#{paramEntity.rettime})>=unix_timestamp(i.creatTime)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                unix_timestamp(i.retTime)>=unix_timestamp(#{paramEntity.retStarttime})
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                unix_timestamp(#{paramEntity.retEndtime})>=unix_timestamp(i.retTime)
+            </if>
+            <if test="paramEntity.isProducer == '1'">and
+                pro.product_id is not NULL
+            </if>
+
+            <if test="paramEntity.retTime!=null">AND MONTH(i.retTime) = #{paramEntity.retTime}
+            </if>
+            <if test="paramEntity.creatTime!=null">AND MONTH(i.creatTime) = #{paramEntity.creatTime}
+            </if>
+        </where>
+        ORDER BY i.creatTime DESC
+        <if test="pageSize!=null">limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--模糊查询条数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT
+        i.id
+        FROM inventory i LEFT JOIN department dep ON i.sysUserID = dep.sysUser_id
+        LEFT JOIN application app ON i.applicationID = app.id
+        LEFT JOIN dictionary dic ON i.dictionaryID = dic.id
+        LEFT JOIN sysuser sys ON i.sysUserID = sys.id
+        LEFT JOIN  sysuser sysu ON i.performer = sysu.id
+        LEFT JOIN inventoryitem iitem ON i.id = iitem.inventory_id
+        LEFT JOIN product pro ON pro.product_id = iitem.product_id
+        LEFT JOIN location loc ON i.location_id = loc.id
+        <where>
+            <if test="paramEntity.status!=null">AND i.status = #{paramEntity.status}
+            </if>
+            <if test="paramEntity.searchDepartment!=null">AND dep.id = #{paramEntity.searchDepartment}
+            </if>
+            <if test="paramEntity.searchApplication!=null">AND i.applicationID = #{paramEntity.searchApplication}
+            </if>
+            <if test="paramEntity.searchLocation!=null">AND i.applicationID = #{paramEntity.searchLocation}
+            </if>
+            <if test="paramEntity.searchDictionary!=null">AND i.dictionaryID = #{paramEntity.searchDictionary}
+            </if>
+            <if test="paramEntity.creattime!=null and paramEntity.creattime!=''">and
+                left(i.creatTime, 10)>=#{paramEntity.creattime}
+            </if>
+            <if test="paramEntity.rettime!=null and paramEntity.rettime!=''">and
+                #{paramEntity.rettime}>=left(i.creatTime, 10)
+            </if>
+            <if test="paramEntity.retStarttime!=null and paramEntity.retStarttime!=''">and
+                left(i.retTime, 10)>=#{paramEntity.retStarttime}
+            </if>
+            <if test="paramEntity.retEndtime!=null and paramEntity.retEndtime!=''">and
+                 #{paramEntity.retEndtime}>=left(i.retTime, 10)
+            </if>
+        </where>
+        ) AS t
+    </select>
+    <!--查询已完成清点 -->
+    <select id="selectInventoryComNum" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT MONTH(i.retTime) as month,COUNT(i.id) as completeNum
+        FROM inventory as i
+        LEFT OUTER JOIN sysuser as su ON i.sysUserID = su.id
+        LEFT OUTER JOIN department as dp ON su.id = dp.sysUser_id
+        <where>
+         i.status = 2
+        AND YEAR(i.creatTime) = YEAR(NOW())
+        </where>
+         GROUP BY MONTH(i.retTime)
+    </select>
+
+    <!--查询未完成清点 -->
+    <select id="selectInventoryNonComNum" parameterType="page" resultMap="BaseResultMapSelect">
+        SELECT MONTH(i.creatTime) as month,COUNT(i.id) as noncompleteNum
+        FROM inventory as i
+        LEFT OUTER JOIN sysuser as su ON i.sysUserID = su.id
+        LEFT OUTER JOIN department as dp ON su.id = dp.sysUser_id
+        <where>
+            i.status = 1
+            AND YEAR(i.creatTime) = YEAR(NOW())
+        </where>
+        GROUP BY MONTH(i.creatTime)
+
+    </select>
+
+    
+
+</mapper>

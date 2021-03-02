@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.AlarmrecordMapper">
+    <resultMap id="BaseResultMap" type="com.ht70605.entity.Alarmrecord">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="sysEquipment_id" jdbcType="VARCHAR" property="sysequipmentId"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="sysUser_id" jdbcType="VARCHAR" property="sysuserId"/>
+        <result column="alarm_time" jdbcType="VARCHAR" property="alarmTime"/>
+        <result column="alarm_type" jdbcType="VARCHAR" property="alarmType"/>
+        <result column="solve_time" jdbcType="VARCHAR" property="solveTime"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, sysEquipment_id, product_id, sysUser_id, alarm_time, alarm_type, solve_time,
+        info
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from alarmrecord
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from alarmrecord
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ht70605.entity.Alarmrecord">
+        insert into alarmrecord (id, sysEquipment_id, product_id,
+        sysUser_id, alarm_time, alarm_type,
+        solve_time, info)
+        values (#{id,jdbcType=VARCHAR}, #{sysequipmentId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+        #{sysuserId,jdbcType=VARCHAR}, #{alarmTime,jdbcType=VARCHAR}, #{alarmType,jdbcType=VARCHAR},
+        #{solveTime,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ht70605.entity.Alarmrecord">
+        insert into alarmrecord
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sysequipmentId != null">
+                sysEquipment_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id,
+            </if>
+            <if test="alarmTime != null">
+                alarm_time,
+            </if>
+            <if test="alarmType != null">
+                alarm_type,
+            </if>
+            <if test="solveTime != null">
+                solve_time,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="sysequipmentId != null">
+                #{sysequipmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="alarmTime != null">
+                #{alarmTime,jdbcType=VARCHAR},
+            </if>
+            <if test="alarmType != null">
+                #{alarmType,jdbcType=VARCHAR},
+            </if>
+            <if test="solveTime != null">
+                #{solveTime,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ht70605.entity.Alarmrecord">
+        update alarmrecord
+        <set>
+            <if test="sysequipmentId != null">
+                sysEquipment_id = #{sysequipmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="sysuserId != null">
+                sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+            </if>
+            <if test="alarmTime != null">
+                alarm_time = #{alarmTime,jdbcType=VARCHAR},
+            </if>
+            <if test="alarmType != null">
+                alarm_type = #{alarmType,jdbcType=VARCHAR},
+            </if>
+            <if test="solveTime != null">
+                solve_time = #{solveTime,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ht70605.entity.Alarmrecord">
+        update alarmrecord
+        set sysEquipment_id = #{sysequipmentId,jdbcType=VARCHAR},
+        product_id = #{productId,jdbcType=VARCHAR},
+        sysUser_id = #{sysuserId,jdbcType=VARCHAR},
+        alarm_time = #{alarmTime,jdbcType=VARCHAR},
+        alarm_type = #{alarmType,jdbcType=VARCHAR},
+        solve_time = #{solveTime,jdbcType=VARCHAR},
+        info = #{info,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

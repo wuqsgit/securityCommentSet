@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht70605.dao.UserMapperDao">
+    <resultMap id="User" type="com.ht70605.entity.User">
+        <id column="id" property="uId"/>
+        <result column="name" property="uName"/>
+        <result column="user_name" property="uLoginName"/>
+        <result column="pass_word" property="uPwd"/>
+        <result column="department_id" property="uDeptId"/>
+        <result column="info" property="info"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!--新增人员 -->
+    <insert id="insert" parameterType="User">
+        INSERT INTO sysuser (id, name, user_name, pass_word, department_id, info, create_time, update_time, status)
+        VALUES (#{uId}, #{uName}, #{uLoginName}, #{uPwd}, #{uDeptId}, #{info}, #{createTime}, #{updateTime}, #{status})
+    </insert>
+    <!--查询人员 -->
+    <select id="selectAll" resultMap="User">
+        select * from sysuser ORDER BY id
+    </select>
+
+
+    <!--通过关键字分页查询 传入page类 -->
+    <select id="selectPageList" parameterType="page" resultMap="User">
+    select * from sysuser where u_name like #{keyWord} limit #{start},#{pageSize}
+  </select>
+    <!--通过关键字分页查询总记录数 -->
+    <select id="selectPageCount" parameterType="page" resultMap="User">
+    select count(1) from sysuser  where name like #{keyWord}
+  </select>
+    <!--通过多条件分页查询 -->
+    <select id="selectPageListUseDyc" parameterType="page" resultMap="User">
+        select * from sysuser
+        <where>
+            <if test="paramEntity.uName!=null">and name like #{paramEntity.uName}</if>
+            <if test="paramEntity.uLoginName!=null">and user_name like #{paramEntity.uLoginName}</if>
+            <if test="paramEntity.uPwd!=null">and pass_word like #{paramEntity.uPwd}</if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <!--通过多条件分页查询总记录数 -->
+    <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+        select count(1) from sysuser
+        <where>
+            <if test="paramEntity.uName!=null">and name like #{paramEntity.uName}</if>
+            <if test="paramEntity.uLoginName!=null">and user_name like #{paramEntity.uLoginName}</if>
+            <if test="paramEntity.uPwd!=null">and pass_word like #{paramEntity.uPwd}</if>
+        </where>
+    </select>
+    <!--通过主键批量删除 -->
+    <delete id="deleteList">
+        delete from sysuser where u_id in
+        <foreach collection="array" open="(" close=")" separator="," item="pk">
+            #{pk}
+        </foreach>
+    </delete>
+
+    <select id="login" parameterType="page" resultType="Integer">
+        select
+        sysuser.id,name,user_name,department_id,dep_name,role_id,role_name
+        from sysuser
+        left join department
+        on sysuser.department_id=department.id
+        left join userrole on sysuser.id=userrole.sysUser_id
+        left join role on userrole.role_id=role.id
+        <where>
+            <if test="paramEntity.uName!=null">and name like #{paramEntity.uName}</if>
+            <if test="paramEntity.uLoginName!=null">and user_name like #{paramEntity.uLoginName}</if>
+            <if test="paramEntity.uPwd!=null">and pass_word like #{paramEntity.uPwd}</if>
+        </where>
+    </select>
+</mapper>

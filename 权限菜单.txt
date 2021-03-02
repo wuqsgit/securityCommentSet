@@ -1,0 +1,51 @@
+管理员
+
+1	0	1	首页	         /src/supervisory/analyze.jsp	/img/menu/main.png	1			
+10	9	13	人员信息维护	/src/basicData/user.jsp	/img/menu/ryxxwh.png	1			
+11	9	12	设备信息维护	/src/basicData/sysEquipment.jsp	/img/menu/sbxxwh.png	1			
+12	9	10	组织机构维护	/src/basicData/department.jsp	/img/menu/zzjgwh.png	1					
+14	9	15	密级信息维护			0			
+15	9	14	系统信息维护	/src/basicData/application.jsp	/img/menu/jcsj.png	1			
+16	9	11	位置信息维护	/src/basicData/location.jsp	/img/menu/jcsj.png	1					
+18	7	18	在柜信息	/src/supervisory/incap.jsp	/img/menu/jkjl.png	1			
+19	7	19	使用记录	/src/supervisory/userecord.jsp	/img/menu/jkjl.png	1			
+2	0	2	密品信息	/src/business/product.jsp	/img/menu/mpxx.png	1			
+20	7	20	出入记录	/src/supervisory/inout.jsp	/img/menu/jkjl.png	1			
+3	0	3	密品清点	/src/business/inventory.jsp	/img/menu/mpqd.png	1			
+4	0	4	密品清退	/src/business/returnObject.jsp	/img/menu/mpqt.png	1			
+5	0	5	密品入库	/src/business/checkIn.jsp	/img/menu/mprk.png	1			
+6	0	6	密品出库	/src/business/checkOut.jsp	/img/menu/mpqt.png	1			
+7	0	7	监控记录		/img/menu/jkjl.png	1			
+8	0	8	统计分析	/src/supervisory/analyze.jsp	/img/menu/tjfx.png	0			
+9	0	9	基础数据		/img/menu/jcsj.png	1			
+
+
+系统管理员 基础信息
+
+9	  0	9	  基础数据		  /img/menu/jcsj.png	1		
+10	9	13	人员信息维护	/src/basicData/user.jsp	/img/menu/ryxxwh.png	1				
+12	9	10	组织机构维护	/src/basicData/department.jsp	/img/menu/zzjgwh.png	1						
+16	9	11	位置信息维护	/src/basicData/location.jsp	/img/menu/jcsj.png	1		
+		
+
+		
+
+密码管理员 基础数据/业务信息
+
+9	  0	9	  基础数据		  /img/menu/jcsj.png	1		
+11	9	12	设备信息维护	/src/basicData/sysEquipment.jsp	/img/menu/sbxxwh.png	1	
+15	9	14	系统信息维护	/src/basicData/application.jsp	/img/menu/jcsj.png	1	
+
+
+业务信息
+
+2	0	2	    密品信息	/src/business/product.jsp	/img/menu/mpxx.png	1						
+3	0	3	    密品清点	/src/business/inventory.jsp	/img/menu/mpqd.png	1				
+4	0	4	    密品清退	/src/business/returnObject.jsp	/img/menu/mpqt.png	1				
+5	0	5	    密品入库	/src/business/checkIn.jsp	/img/menu/mprk.png	1				
+6	0	6	    密品出库	/src/business/checkOut.jsp	/img/menu/mpqt.png	1				
+7	0	7	    监控记录		/img/menu/jkjl.png	1						
+8	0	8	    统计分析	/src/supervisory/analyze.jsp	/img/menu/tjfx.png	0							
+18	7	18	在柜信息	/src/supervisory/incap.jsp	/img/menu/jkjl.png	1				
+19	7	19	使用记录	/src/supervisory/userecord.jsp	/img/menu/jkjl.png	1				
+20	7	20	出入记录	/src/supervisory/inout.jsp	/img/menu/jkjl.png	1	
